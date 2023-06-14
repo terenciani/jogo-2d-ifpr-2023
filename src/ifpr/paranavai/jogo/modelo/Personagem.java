@@ -2,6 +2,8 @@ package ifpr.paranavai.jogo.modelo;
 
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 
@@ -18,9 +20,12 @@ public class Personagem {
     private int larguraImagem;
     private int alturaImagem;
 
+    private ArrayList<Tiro> tiros;
+
     public Personagem() {
         this.posicaoEmX = POSICAO_INICIAL_EM_X;
         this.posicaoEmY = POSICAO_INICIAL_EM_Y;
+        this.tiros = new ArrayList<Tiro>();
     }
 
     public void carregar() {
@@ -33,6 +38,13 @@ public class Personagem {
     public void atualizar() {
         this.posicaoEmX = this.posicaoEmX + this.deslocamentoEmX;
         this.posicaoEmY = this.posicaoEmY + this.deslocamentoEmY;
+    }
+
+    public void atirar() {
+        int frenteDaNave = this.posicaoEmX + this.larguraImagem;
+        int meioDaNave = this.posicaoEmY = (this.larguraImagem / 2);
+        Tiro tiro = new Tiro(frenteDaNave, meioDaNave);
+        this.tiros.add(tiro);
     }
 
     public void mover(KeyEvent tecla) {
@@ -130,4 +142,13 @@ public class Personagem {
     public void setAlturaImagem(int alturaImagem) {
         this.alturaImagem = alturaImagem;
     }
+
+    public List<Tiro> getTiros() {
+        return this.tiros;
+    }
+
+    public void setTiros(List<Tiro> tiros) {
+        this.tiros = tiros;
+    }
+
 }
