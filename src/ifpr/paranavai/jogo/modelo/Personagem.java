@@ -147,7 +147,7 @@ public class Personagem {
         return this.tiros;
     }
 
-    public void setTiros(List<Tiro> tiros) {
+    public void setTiros(ArrayList<Tiro> tiros) {
         this.tiros = tiros;
     }
 
