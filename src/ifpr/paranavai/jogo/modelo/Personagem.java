@@ -3,7 +3,6 @@ package ifpr.paranavai.jogo.modelo;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 
@@ -143,7 +142,7 @@ public class Personagem {
         this.alturaImagem = alturaImagem;
     }
 
-    public List<Tiro> getTiros() {
+    public ArrayList<Tiro> getTiros() {
         return this.tiros;
     }
 
