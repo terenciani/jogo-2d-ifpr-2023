@@ -55,7 +55,7 @@ public class Fase extends JPanel implements ActionListener, KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
+        // throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
     }
 
     @Override
@@ -80,15 +80,15 @@ public class Fase extends JPanel implements ActionListener, KeyListener {
         ArrayList<Tiro> tiros = personagem.getTiros();
 
         // Criando um laço de repetição (foreach). Iremos percorrer toda a lista.
-        for (Tiro tiro : tiros) {
+        for (int i = 0; i < tiros.size(); i++) {
             // Verificar se (if) a posição do x (tiro.getPosicaoEmX()) é maior do que a
             // largura da nossa janela
-            if (tiro.getPosicaoEmX() > LARGURA_DA_JANELA)
+            if (tiros.get(i).getPosicaoEmX() > LARGURA_DA_JANELA)
                 // Remover da lista se estiver fora do campo de visão (LARGURA_DA_TELA)
-                tiros.remove(tiro);
+                tiros.remove(i);
             else
                 // Atualizar a posição do tiro.
-                tiro.atualizar();
+                tiros.get(i).atualizar();
         }
 
         repaint();
