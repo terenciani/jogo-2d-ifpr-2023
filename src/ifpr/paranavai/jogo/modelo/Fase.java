@@ -105,28 +105,33 @@ public class Fase extends JPanel implements ActionListener, KeyListener {
 
         // Criando um laço de repetição (for). Iremos percorrer toda a lista.
         for (int i = 0; i < tiros.size(); i++) {
+            // Obter o objeto tiro da posicao i do ArrayList
+            Tiro tiro = tiros.get(i);
             // Verificar se (if) a posição do x (tiro.getPosicaoEmX()) é maior do que a
             // largura da nossa janela
-            if (tiros.get(i).getPosicaoEmX() > LARGURA_DA_JANELA)
-                // Remover da lista se estiver fora do campo de visão (LARGURA_DA_TELA)
-                tiros.remove(i);
+            if (tiro.getPosicaoEmX() > LARGURA_DA_JANELA)
+                // Remover da lista se estiver fora do campo de visão (LARGURA_DA_JANELA)
+                tiros.remove(tiro);
             else
                 // Atualizar a posição do tiro.
-                tiros.get(i).atualizar();
+                tiro.atualizar();
         }
 
         // Criando um laço de repetição (for). Iremos percorrer toda a lista.
-        for (int i = 0; i < inimigos.size(); i++) {
-            // Verificar se (if) a posição do x (tiro.getPosicaoEmX()) é maior do que a
+        for (int i = 0; i < this.inimigos.size(); i++) {
+            // Obter o objeto inimigo da posicao i do ArrayList
+            Inimigo inimigo = this.inimigos.get(i);
+            // Verificar se (if) a posição do x (inimigo.getPosicaoEmX()) é maior do que a
             // largura da nossa janela
-            if (inimigos.get(i).getPosicaoEmX() < 0)
+            if (inimigo.getPosicaoEmX() < 0)
                 // Remover da lista se estiver fora do campo de visão (0)
-                inimigos.remove(i);
+                inimigos.remove(inimigo);
             else
                 // Atualizar a posição do inimigo.
-                inimigos.get(i).atualizar();
+                inimigo.atualizar();
         }
 
         repaint();
     }
+
 }
