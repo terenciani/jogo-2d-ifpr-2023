@@ -2,12 +2,16 @@ package ifpr.paranavai.jogo.modelo;
 
 import java.awt.Image;
 
-public class ElementoGrafico {
+public abstract class ElementoGrafico {
     private int posicaoEmX;
     private int posicaoEmY;
     private Image imagem;
     private int larguraImagem;
     private int alturaImagem;
+
+    public abstract void carregar();
+
+    public abstract void atualizar();
 
     public int getPosicaoEmX() {
         return this.posicaoEmX;
@@ -31,7 +35,7 @@ public class ElementoGrafico {
 
     public void setImagem(Image imagem) {
         this.imagem = imagem;
-        
+
         this.larguraImagem = this.imagem.getWidth(null);
         this.alturaImagem = this.imagem.getHeight(null);
     }
@@ -51,5 +55,4 @@ public class ElementoGrafico {
     public void setAlturaImagem(int alturaImagem) {
         this.alturaImagem = alturaImagem;
     }
-
 }

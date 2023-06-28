@@ -11,11 +11,13 @@ public class Tiro extends ElementoGrafico {
         super.setPosicaoEmY(posicaoPersonagemEmY);
     }
 
+    @Override
     public void carregar() {
         ImageIcon carregando = new ImageIcon("recursos\\tiro.png");
         super.setImagem(carregando.getImage());
     }
 
+    @Override
     public void atualizar() {
         super.setPosicaoEmX(super.getPosicaoEmX() + VELOCIDADE);
     }
