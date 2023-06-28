@@ -16,9 +16,11 @@ import javax.swing.Timer;
 public class Fase extends JPanel implements ActionListener, KeyListener {
     private Image fundo;
     private Personagem personagem;
+    private ArrayList<Inimigo> inimigos;
     private Timer timer;
     private static final int DELAY = 5;
     private static final int LARGURA_DA_JANELA = 938;
+    private static final int QTDE_DE_INIMIGOS = 40;
 
     public Fase() { // Linha adicionada (+)
         setFocusable(true); // + define o foco inicial do jogo
@@ -27,9 +29,23 @@ public class Fase extends JPanel implements ActionListener, KeyListener {
         fundo = carregando.getImage();
         personagem = new Personagem(); // + Criação do objeto Personagem
         personagem.carregar(); // + Carregando as informações do nosso personagem
+
+        this.inicializaInimigos();
+
         addKeyListener(this); // + Definindo que a própria classe irá controlar os eventos do teclado
         timer = new Timer(DELAY, this); // + Criação do objeto Timer
         timer.start(); // + Iniciando o nosso jogo
+    }
+
+    public void inicializaInimigos() {
+        inimigos = new ArrayList<Inimigo>();
+
+        for (int i = 0; i < QTDE_DE_INIMIGOS; i++) {
+            int x = (int) (Math.random() * 8000 + 1024);
+            int y = (int) (Math.random() * 650 + 30);
+            Inimigo inimigo = new Inimigo(x, y);
+            inimigos.add(inimigo);
+        }
     }
 
     public void paint(Graphics g) {
@@ -47,6 +63,14 @@ public class Fase extends JPanel implements ActionListener, KeyListener {
             tiro.carregar();
             // Desenhar o tiro na nossa tela.
             graficos.drawImage(tiro.getImagem(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
+        }
+
+        // Criando um laço de repetição (foreach). Iremos percorrer toda a lista.
+        for (Inimigo inimigo : inimigos) {
+            // Carregando imagem do objeto inimigo pelo método carregar.
+            inimigo.carregar();
+            // Desenhar o inimigo na nossa tela.
+            graficos.drawImage(inimigo.getImagem(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
         }
 
         g.dispose();
@@ -79,7 +103,7 @@ public class Fase extends JPanel implements ActionListener, KeyListener {
         // local chamada tiros.
         ArrayList<Tiro> tiros = personagem.getTiros();
 
-        // Criando um laço de repetição (foreach). Iremos percorrer toda a lista.
+        // Criando um laço de repetição (for). Iremos percorrer toda a lista.
         for (int i = 0; i < tiros.size(); i++) {
             // Verificar se (if) a posição do x (tiro.getPosicaoEmX()) é maior do que a
             // largura da nossa janela
@@ -89,6 +113,18 @@ public class Fase extends JPanel implements ActionListener, KeyListener {
             else
                 // Atualizar a posição do tiro.
                 tiros.get(i).atualizar();
+        }
+
+        // Criando um laço de repetição (for). Iremos percorrer toda a lista.
+        for (int i = 0; i < inimigos.size(); i++) {
+            // Verificar se (if) a posição do x (tiro.getPosicaoEmX()) é maior do que a
+            // largura da nossa janela
+            if (inimigos.get(i).getPosicaoEmX() < 0)
+                // Remover da lista se estiver fora do campo de visão (0)
+                inimigos.remove(i);
+            else
+                // Atualizar a posição do inimigo.
+                inimigos.get(i).atualizar();
         }
 
         repaint();
