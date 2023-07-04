@@ -59,7 +59,7 @@ class Personagem{
 
 class Inimigo{
     +Inimigo(int xAleatorio, int yAleatorio)
-
+}
 class Tiro{
     +Tiro(int posicaoPersonagemEmX, int posicaoPersonagemEmY)
 }
@@ -72,7 +72,7 @@ Fase -up-|> JPanel: extends
 Fase -up.|> ActionListener: implements
 Fase -up.|> KeyListener: implements
 
-Fase "1" *-down-> "1" Personagem
+Fase "1" *-right-> "1" Personagem
 Inimigo "*" <-right- "1" Fase
 
 Personagem "1" *--> "*" Tiro
