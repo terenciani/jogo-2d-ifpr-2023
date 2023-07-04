@@ -1,12 +1,13 @@
 @startuml
 
-title Diagrama de Classes - Sem Herança
+title Diagrama de Classes - com Herança
 
 package ifpr.paranavai.jogo.modelo <<Frame>> {
   class Fase
   class Personagem
   class Inimigo
   class Tiro
+  class ElementoGrafico
 }
 
 package java.awt.event <<Frame>> {
@@ -18,6 +19,15 @@ package java.awt.event <<Frame>> {
 
 package javax.swing <<Frame>> {
   class JPanel
+}
+
+class ElementoGrafico {
+    -int posicaoEmX
+    -int posicaoEmY
+    -Image imagem
+    -int larguraImagem
+    -int alturaImagem
+    .. getters e setters ..
 }
 
 class Fase {
@@ -35,11 +45,6 @@ class Fase {
 class Personagem{
     -int deslocamentoEmX
     -int deslocamentoEmY
-    -int posicaoEmX
-    -int posicaoEmY
-    -Image imagem
-    -int larguraImagem
-    -int alturaImagem
     +Personagem()
     +void carregar()
     +void atualizar()
@@ -50,27 +55,15 @@ class Personagem{
 }
 
 class Inimigo{
-    -int posicaoEmX
-    -int posicaoEmY
-    -Image imagem
-    -int larguraImagem
-    -int alturaImagem
     +Inimigo(int xAleatorio, int yAleatorio)
     +void carregar()
     +void atualizar()
-    .. getters e setters ..
 }
 
 class Tiro{
-    -int posicaoEmX
-    -int posicaoEmY
-    -Image imagem
-    -int larguraImagem
-    -int alturaImagem
     +Tiro(int posicaoPersonagemEmX, int posicaoPersonagemEmY)
     +void carregar()
     +void atualizar()
-    .. getters e setters ..
 }
 
 class JPanel
@@ -85,5 +78,9 @@ Fase "1" *--left--> "1" Personagem
 Fase "1" *-right-> "*" Inimigo
 
 Personagem "1" *--> "*" Tiro
+Personagem --|> ElementoGrafico: extends
 
+Tiro --|> ElementoGrafico: extends
+
+Inimigo --|> ElementoGrafico: extends
 @enduml
