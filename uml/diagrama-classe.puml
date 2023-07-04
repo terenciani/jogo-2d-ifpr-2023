@@ -1,6 +1,6 @@
 @startuml
 
-title Diagrama de Classes - com Herança
+title Diagrama de Classes - com Herança e Classe Abstrata
 
 package ifpr.paranavai.jogo.modelo <<Frame>> {
     class Fase
