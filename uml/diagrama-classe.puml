@@ -1,9 +1,10 @@
 @startuml
 
-title Diagrama de Classes - com Herança e Classe Abstrata
+title Diagrama de Classes - com Herança, Classe Abstrata e Interface
 
 package ifpr.paranavai.jogo.modelo <<Frame>> {
-    class Fase
+    interface IFase
+    class FaseUm
     class Personagem
     class Inimigo
     class Tiro
@@ -35,11 +36,10 @@ abstract class ElementoGrafico <<abstract>> {
     .. getters e setters ..
 }
 
-class Fase {
+class FaseUm {
     -Image fundo
     -Timer timer
-    +Fase()
-    +void inicializaInimigos()
+    +FaseUm()
     +void paint(Graphics g)
     +void keyTyped(KeyEvent e)
     +void keyPressed(KeyEvent e)
@@ -60,20 +60,26 @@ class Personagem{
 class Inimigo{
     +Inimigo(int xAleatorio, int yAleatorio)
 }
-class Tiro{
+
+class Tiro {
     +Tiro(int posicaoPersonagemEmX, int posicaoPersonagemEmY)
+}
+
+interface IFase {    
+    +void inicializaInimigos()
 }
 
 class JPanel
 interface ActionListener <<interface>>
 interface KeyListener <<interface>>
 
-Fase -up-|> JPanel: extends
-Fase -up.|> ActionListener: implements
-Fase -up.|> KeyListener: implements
+FaseUm -up-|> JPanel: extends
+FaseUm -up.|> ActionListener: implements
+FaseUm -up.|> KeyListener: implements
+FaseUm -right.|> IFase: implements
 
-Fase "1" *-right-> "1" Personagem
-Inimigo "*" <-right- "1" Fase
+FaseUm "1" *-right-> "1" Personagem
+Inimigo "*" <-right- "1" FaseUm
 
 Personagem "1" *--> "*" Tiro
 Personagem --|> ElementoGrafico: extends
