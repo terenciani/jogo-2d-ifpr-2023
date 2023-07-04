@@ -67,7 +67,7 @@ public abstract class ElementoGrafico {
     }
 
     public boolean getEhVisivel() {
-        return this.\FehVisivel;
+        return this.ehVisivel;
     }
 
     public void setEhVisivel(boolean ehVisivel) {

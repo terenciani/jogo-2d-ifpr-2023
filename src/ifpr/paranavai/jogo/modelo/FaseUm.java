@@ -40,29 +40,33 @@ public class FaseUm extends Fase {
     @Override
     public void paint(Graphics g) {
         Graphics2D graficos = (Graphics2D) g;
-        graficos.drawImage(fundo, 0, 0, null);
-        graficos.drawImage(personagem.getImagem(), personagem.getPosicaoEmX(), personagem.getPosicaoEmY(), this);
+        if (emJogo) {
+            graficos.drawImage(fundo, 0, 0, null);
+            graficos.drawImage(personagem.getImagem(), personagem.getPosicaoEmX(), personagem.getPosicaoEmY(), this);
 
-        // Recuperar a nossa lista de tiros (getTiros) e atribuímos para uma variável
-        // local chamada tiros.
-        ArrayList<Tiro> tiros = personagem.getTiros();
+            // Recuperar a nossa lista de tiros (getTiros) e atribuímos para uma variável
+            // local chamada tiros.
+            ArrayList<Tiro> tiros = personagem.getTiros();
 
-        // Criando um laço de repetição (foreach). Iremos percorrer toda a lista.
-        for (Tiro tiro : tiros) {
-            // Carregando imagem do objeto tiro pelo método carregar.
-            tiro.carregar();
-            // Desenhar o tiro na nossa tela.
-            graficos.drawImage(tiro.getImagem(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
+            // Criando um laço de repetição (foreach). Iremos percorrer toda a lista.
+            for (Tiro tiro : tiros) {
+                // Carregando imagem do objeto tiro pelo método carregar.
+                tiro.carregar();
+                // Desenhar o tiro na nossa tela.
+                graficos.drawImage(tiro.getImagem(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
+            }
+
+            // Criando um laço de repetição (foreach). Iremos percorrer toda a lista.
+            for (Inimigo inimigo : inimigos) {
+                // Carregando imagem do objeto inimigo pelo método carregar.
+                inimigo.carregar();
+                // Desenhar o inimigo na nossa tela.
+                graficos.drawImage(inimigo.getImagem(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
+            }
+        } else {
+            ImageIcon fimDeJogo = new ImageIcon("recursos\\fimdejogo.png");
+            graficos.drawImage(fimDeJogo.getImage(), 0, 0, null);
         }
-
-        // Criando um laço de repetição (foreach). Iremos percorrer toda a lista.
-        for (Inimigo inimigo : inimigos) {
-            // Carregando imagem do objeto inimigo pelo método carregar.
-            inimigo.carregar();
-            // Desenhar o inimigo na nossa tela.
-            graficos.drawImage(inimigo.getImagem(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
-        }
-
         g.dispose();
     }
 

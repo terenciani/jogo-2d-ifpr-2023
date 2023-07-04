@@ -37,8 +37,9 @@ abstract class ElementoGrafico <<abstract>> {
 }
 
 abstract class Fase <<abstract>>{
-    -Image fundo
-    -Timer timer
+    #Image fundo
+    #Timer timer
+    #booelan emJogo
     +Fase()
     +{abstract} void inicializaInimigos()
     +{abstract} void paint(Graphics g)
