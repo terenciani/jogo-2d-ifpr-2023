@@ -139,7 +139,7 @@ public class FaseUm extends Fase {
             }
             ArrayList<Tiro> tiros = this.personagem.getTiros();
             for (int j = 0; j < tiros.size(); j++) {
-                Tiro tiro = tiros.get(i);
+                Tiro tiro = tiros.get(j);
                 Rectangle formaTiro = tiro.getRectangle();
                 if (formaInimigo.intersects(formaTiro)) {
                     inimigo.setEhVisivel(false);

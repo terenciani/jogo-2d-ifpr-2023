@@ -9,7 +9,7 @@ public abstract class ElementoGrafico {
     private Image imagem;
     private int larguraImagem;
     private int alturaImagem;
-    private boolean ehVisivel;
+    private boolean ehVisivel = true;
 
     public abstract void carregar();
 

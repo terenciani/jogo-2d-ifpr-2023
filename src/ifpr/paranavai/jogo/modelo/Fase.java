@@ -19,7 +19,7 @@ public abstract class Fase extends JPanel implements ActionListener, KeyListener
     protected Personagem personagem;
     protected ArrayList<Inimigo> inimigos;
     protected Timer timer;
-    protected boolean emJogo;
+    protected boolean emJogo = true;
 
     public Fase() {
         setFocusable(true); // + define o foco inicial do jogo
