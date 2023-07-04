@@ -28,9 +28,11 @@ abstract class ElementoGrafico <<abstract>> {
     -int posicaoEmY
     -Image imagem
     -int larguraImagem
-    -int alturaImagem    
+    -int alturaImagem 
+    -boolean ehVisivel   
     +{abstract} void carregar()
     +{abstract} void atualizar()
+    +Rectangle getRectangle()
     .. getters e setters ..
 }
 
