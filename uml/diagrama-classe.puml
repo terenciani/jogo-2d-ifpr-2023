@@ -3,17 +3,20 @@
 title Diagrama de Classes - com Herança
 
 package ifpr.paranavai.jogo.modelo <<Frame>> {
-  class Fase
-  class Personagem
-  class Inimigo
-  class Tiro
-  class ElementoGrafico
+    class Fase
+    class Personagem
+    class Inimigo
+    class Tiro
+    class ElementoGrafico
+    note right of ElementoGrafico::carregar
+        Itálico indica que
+        o método é abstrato
+    end note
 }
 
 package java.awt.event <<Frame>> {
-  interface ActionListener
-  interface KeyListener
-
+    interface ActionListener
+    interface KeyListener
 }
 
 
@@ -21,12 +24,14 @@ package javax.swing <<Frame>> {
   class JPanel
 }
 
-class ElementoGrafico {
+abstract class ElementoGrafico <<abstract>> {
     -int posicaoEmX
     -int posicaoEmY
     -Image imagem
     -int larguraImagem
-    -int alturaImagem
+    -int alturaImagem    
+    +{abstract} void carregar()
+    +{abstract} void atualizar()
     .. getters e setters ..
 }
 
@@ -46,8 +51,6 @@ class Personagem{
     -int deslocamentoEmX
     -int deslocamentoEmY
     +Personagem()
-    +void carregar()
-    +void atualizar()
     +void atirar()
     +void mover(KeyEvent tecla)
     +void parar(KeyEvent tecla)
@@ -56,14 +59,9 @@ class Personagem{
 
 class Inimigo{
     +Inimigo(int xAleatorio, int yAleatorio)
-    +void carregar()
-    +void atualizar()
-}
 
 class Tiro{
     +Tiro(int posicaoPersonagemEmX, int posicaoPersonagemEmY)
-    +void carregar()
-    +void atualizar()
 }
 
 class JPanel
@@ -74,8 +72,8 @@ Fase -up-|> JPanel: extends
 Fase -up.|> ActionListener: implements
 Fase -up.|> KeyListener: implements
 
-Fase "1" *--left--> "1" Personagem
-Fase "1" *-right-> "*" Inimigo
+Fase "1" *-down-> "1" Personagem
+Inimigo "*" <-right- "1" Fase
 
 Personagem "1" *--> "*" Tiro
 Personagem --|> ElementoGrafico: extends
