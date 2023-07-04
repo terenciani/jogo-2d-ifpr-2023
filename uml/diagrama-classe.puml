@@ -1,15 +1,20 @@
 @startuml
 
-title Diagrama de Classes - com Herança, Classe Abstrata e Interface
+title Diagrama de Classes - com Herança, Classe Abstrata (sem) Interface
 
 package ifpr.paranavai.jogo.modelo <<Frame>> {
-    interface IFase
+    class Fase
     class FaseUm
+    class FaseDois
     class Personagem
     class Inimigo
     class Tiro
     class ElementoGrafico
     note right of ElementoGrafico::carregar
+        Itálico indica que
+        o método é abstrato
+    end note
+    note right of Fase::keyPressed
         Itálico indica que
         o método é abstrato
     end note
@@ -36,15 +41,16 @@ abstract class ElementoGrafico <<abstract>> {
     .. getters e setters ..
 }
 
-class FaseUm {
+abstract class Fase <<abstract>>{
     -Image fundo
     -Timer timer
-    +FaseUm()
-    +void paint(Graphics g)
-    +void keyTyped(KeyEvent e)
-    +void keyPressed(KeyEvent e)
-    +void keyReleased(KeyEvent e)
-    +void actionPerformed(ActionEvent e)
+    +Fase()
+    +{abstract} void inicializaInimigos()
+    +{abstract} void paint(Graphics g)
+    +{abstract} void keyTyped(KeyEvent e)
+    +{abstract} void keyPressed(KeyEvent e)
+    +{abstract} void keyReleased(KeyEvent e)
+    +{abstract} void actionPerformed(ActionEvent e)
 }
 
 class Personagem{
@@ -65,21 +71,32 @@ class Tiro {
     +Tiro(int posicaoPersonagemEmX, int posicaoPersonagemEmY)
 }
 
-interface IFase {    
-    +void inicializaInimigos()
+class FaseUm {    
+    
 }
 
-class JPanel
-interface ActionListener <<interface>>
-interface KeyListener <<interface>>
+class JPanel{
+    +{abstract} void paint(Graphics g)
+}
+interface ActionListener <<interface>> {
+    +{abstract} void actionPerformed(ActionEvent e)
+}
 
-FaseUm -up-|> JPanel: extends
-FaseUm -up.|> ActionListener: implements
-FaseUm -up.|> KeyListener: implements
-FaseUm -right.|> IFase: implements
+interface KeyListener <<interface>> {
+    +{abstract} void keyTyped(KeyEvent e)
+    +{abstract} void keyPressed(KeyEvent e)
+    +{abstract} void keyReleased(KeyEvent e)
+}
 
-FaseUm "1" *-right-> "1" Personagem
-Inimigo "*" <-right- "1" FaseUm
+Fase -up-|> JPanel: extends
+Fase -up.|> ActionListener: implements
+Fase -up.|> KeyListener: implements
+FaseUm -left-|> Fase: extends
+FaseDois -left-|> Fase: extends
+
+
+Fase "1" *-left-> "1" Personagem
+Inimigo "*" <-up- "1" Fase
 
 Personagem "1" *--> "*" Tiro
 Personagem --|> ElementoGrafico: extends
