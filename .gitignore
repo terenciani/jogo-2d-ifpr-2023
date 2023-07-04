@@ -36,6 +36,8 @@ target/
 .classpath
 .project
 
+out/
+
 # NetBeans specific
 nbproject/private/
 build/
