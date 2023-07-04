@@ -7,7 +7,7 @@ import ifpr.paranavai.jogo.modelo.FaseUm;
 
 public class Principal extends JFrame {
     public Principal() {
-        Fase fase = new FaseUm();
+        FaseUm fase = new FaseUm();
         super.add(fase);
         super.setTitle("Jogo do IFPR - Campus Paranavaí");
         super.setSize(1024, 728);

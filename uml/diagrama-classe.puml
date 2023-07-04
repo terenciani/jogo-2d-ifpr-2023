@@ -41,7 +41,8 @@ abstract class Fase <<abstract>>{
     #Timer timer
     #booelan emJogo
     +Fase()
-    +{abstract} void inicializaInimigos()
+    +{abstract} void inicializaInimigos()    
+    +{abstract} void verificarColisoes()
     +{abstract} void paint(Graphics g)
     +{abstract} void keyTyped(KeyEvent e)
     +{abstract} void keyPressed(KeyEvent e)

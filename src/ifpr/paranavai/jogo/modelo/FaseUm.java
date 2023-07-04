@@ -2,6 +2,7 @@ package ifpr.paranavai.jogo.modelo;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class FaseUm extends Fase {
 
     public FaseUm() { // Linha adicionada (+)
         super(); // Chamada do construtor da classe super
+        emJogo = true;
         ImageIcon carregando = new ImageIcon("recursos\\fundo.jpg");
         fundo = carregando.getImage();
 
@@ -23,6 +25,7 @@ public class FaseUm extends Fase {
 
         timer = new Timer(DELAY, this); // + Criação do objeto Timer
         timer.start(); // + Iniciando o nosso jogo
+
     }
 
     @Override
@@ -97,7 +100,7 @@ public class FaseUm extends Fase {
             Tiro tiro = tiros.get(i);
             // Verificar se (if) a posição do x (tiro.getPosicaoEmX()) é maior do que a
             // largura da nossa janela
-            if (tiro.getPosicaoEmX() > LARGURA_DA_JANELA)
+            if (tiro.getPosicaoEmX() > LARGURA_DA_JANELA || !tiro.getEhVisivel())
                 // Remover da lista se estiver fora do campo de visão (LARGURA_DA_JANELA)
                 tiros.remove(tiro);
             else
@@ -111,15 +114,38 @@ public class FaseUm extends Fase {
             Inimigo inimigo = this.inimigos.get(i);
             // Verificar se (if) a posição do x (inimigo.getPosicaoEmX()) é maior do que a
             // largura da nossa janela
-            if (inimigo.getPosicaoEmX() < 0)
+            if (inimigo.getPosicaoEmX() < 0 || !inimigo.getEhVisivel())
                 // Remover da lista se estiver fora do campo de visão (0)
                 inimigos.remove(inimigo);
             else
                 // Atualizar a posição do inimigo.
                 inimigo.atualizar();
         }
-
+        this.verificarColisoes();
         repaint();
     }
 
+    @Override
+    public void verificarColisoes() {
+        Rectangle formaPersonagem = this.personagem.getRectangle();
+
+        for (int i = 0; i < this.inimigos.size(); i++) {
+            Inimigo inimigo = inimigos.get(i);
+            Rectangle formaInimigo = inimigo.getRectangle();
+            if (formaInimigo.intersects(formaPersonagem)) {
+                this.personagem.setEhVisivel(false);
+                inimigo.setEhVisivel(false);
+                emJogo = false;
+            }
+            ArrayList<Tiro> tiros = this.personagem.getTiros();
+            for (int j = 0; j < tiros.size(); j++) {
+                Tiro tiro = tiros.get(i);
+                Rectangle formaTiro = tiro.getRectangle();
+                if (formaInimigo.intersects(formaTiro)) {
+                    inimigo.setEhVisivel(false);
+                    tiro.setEhVisivel(false);
+                }
+            }
+        }
+    }
 }
