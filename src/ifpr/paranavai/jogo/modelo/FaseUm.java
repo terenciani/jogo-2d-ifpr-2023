@@ -2,37 +2,25 @@ package ifpr.paranavai.jogo.modelo;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class FaseUm extends JPanel implements ActionListener, KeyListener, Fase {
-    private Image fundo;
-    private Personagem personagem;
-    private ArrayList<Inimigo> inimigos;
-    private Timer timer;
-    private static final int DELAY = 5;
-    private static final int LARGURA_DA_JANELA = 938;
-    private static final int QTDE_DE_INIMIGOS = 40;
+public class FaseUm extends Fase {
 
     public FaseUm() { // Linha adicionada (+)
-        setFocusable(true); // + define o foco inicial do jogo
-        setDoubleBuffered(true); // + Otimização computacional
+        super(); // Chamada do construtor da classe super
         ImageIcon carregando = new ImageIcon("recursos\\fundo.jpg");
         fundo = carregando.getImage();
+
         personagem = new Personagem(); // + Criação do objeto Personagem
         personagem.carregar(); // + Carregando as informações do nosso personagem
 
         this.inicializaInimigos();
 
-        addKeyListener(this); // + Definindo que a própria classe irá controlar os eventos do teclado
         timer = new Timer(DELAY, this); // + Criação do objeto Timer
         timer.start(); // + Iniciando o nosso jogo
     }
@@ -76,12 +64,6 @@ public class FaseUm extends JPanel implements ActionListener, KeyListener, Fase 
         }
 
         g.dispose();
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
     }
 
     @Override
