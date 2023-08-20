@@ -7,8 +7,9 @@ public class Tiro extends ElementoGrafico {
     private static int VELOCIDADE = 2;
 
     public Tiro(int posicaoPersonagemEmX, int posicaoPersonagemEmY) {
+        this.carregar();
         super.setPosicaoEmX(posicaoPersonagemEmX);
-        super.setPosicaoEmY(posicaoPersonagemEmY);
+        super.setPosicaoEmY(posicaoPersonagemEmY - (this.getAlturaImagem() / 2));
     }
 
     @Override
