@@ -19,7 +19,6 @@ public class FaseUm extends Fase {
         fundo = carregando.getImage();
 
         personagem = new Personagem(); // + Criação do objeto Personagem
-        personagem.carregar(); // + Carregando as informações do nosso personagem
 
         this.inicializaInimigos();
 
@@ -53,16 +52,12 @@ public class FaseUm extends Fase {
 
             // Criando um laço de repetição (foreach). Iremos percorrer toda a lista.
             for (Tiro tiro : tiros) {
-                // Carregando imagem do objeto tiro pelo método carregar.
-                tiro.carregar();
                 // Desenhar o tiro na nossa tela.
                 graficos.drawImage(tiro.getImagem(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
             }
 
             // Criando um laço de repetição (foreach). Iremos percorrer toda a lista.
             for (Inimigo inimigo : inimigos) {
-                // Carregando imagem do objeto inimigo pelo método carregar.
-                inimigo.carregar();
                 // Desenhar o inimigo na nossa tela.
                 graficos.drawImage(inimigo.getImagem(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
             }

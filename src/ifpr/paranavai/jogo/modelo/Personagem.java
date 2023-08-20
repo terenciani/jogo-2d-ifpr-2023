@@ -16,6 +16,7 @@ public class Personagem extends ElementoGrafico {
     private ArrayList<Tiro> tiros;
 
     public Personagem() {
+        this.carregar();
         super.setPosicaoEmX(POSICAO_INICIAL_EM_X);
         super.setPosicaoEmY(POSICAO_INICIAL_EM_Y);
         this.tiros = new ArrayList<Tiro>();
