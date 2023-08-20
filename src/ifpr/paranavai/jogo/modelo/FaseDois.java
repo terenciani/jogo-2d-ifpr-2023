@@ -11,9 +11,10 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
+import ifpr.paranavai.jogo.principal.Principal;
+
 public class FaseDois extends Fase {
     public static final int DELAY = 5;
-    public static final int LARGURA_DA_JANELA = 938;
     public static final int QTDE_DE_INIMIGOS = 40;
 
     protected Image fundo;
@@ -107,7 +108,7 @@ public class FaseDois extends Fase {
             Tiro tiro = tiros.get(i);
             // Verificar se (if) a posição do x (tiro.getPosicaoEmX()) é maior do que a
             // largura da nossa janela
-            if (tiro.getPosicaoEmX() > LARGURA_DA_JANELA || !tiro.getEhVisivel())
+            if (tiro.getPosicaoEmX() > Principal.LARGURA_DA_JANELA || !tiro.getEhVisivel())
                 // Remover da lista se estiver fora do campo de visão (LARGURA_DA_JANELA)
                 tiros.remove(tiro);
             else
