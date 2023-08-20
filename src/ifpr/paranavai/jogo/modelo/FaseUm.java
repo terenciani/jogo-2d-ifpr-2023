@@ -34,8 +34,8 @@ public class FaseUm extends Fase {
         inimigos = new ArrayList<Inimigo>();
 
         for (int i = 0; i < QTDE_DE_INIMIGOS; i++) {
-            int x = (int) (Math.random() * 8000 + 1024);
-            int y = (int) (Math.random() * 650 + 30);
+            int x = (int) ((Math.random() * Principal.LARGURA_DA_JANELA) + 8000);
+            int y = (int) (Math.random() * Principal.ALTURA_DA_JANELA);
             Inimigo inimigo = new Inimigo(x, y);
             inimigos.add(inimigo);
         }
