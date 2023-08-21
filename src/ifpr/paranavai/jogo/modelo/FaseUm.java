@@ -34,7 +34,7 @@ public class FaseUm extends Fase {
         inimigos = new ArrayList<Inimigo>();
 
         for (int i = 0; i < QTDE_DE_INIMIGOS; i++) {
-            int x = (int) ((Math.random() * Principal.LARGURA_DA_JANELA) + 8000);
+            int x = (int) ((Math.random() * 8000) + Principal.LARGURA_DA_JANELA);
             int y = (int) (Math.random() * Principal.ALTURA_DA_JANELA);
             Inimigo inimigo = new Inimigo(x, y);
             inimigos.add(inimigo);
@@ -64,8 +64,8 @@ public class FaseUm extends Fase {
                 graficos.drawImage(inimigo.getImagem(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
             }
         } else {
-            ImageIcon fimDeJogo = new ImageIcon("recursos\\fimdejogo.png");
-            graficos.drawImage(fimDeJogo.getImage(), 0, 0, null);
+            ImageIcon fimDeJogo = new ImageIcon("recursos\\fimdejogo2.jpg");
+            graficos.drawImage(fimDeJogo.getImage(), 0, 0, this);
         }
         g.dispose();
     }
