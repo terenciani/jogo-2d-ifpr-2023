@@ -13,10 +13,12 @@ import javax.swing.Timer;
 public abstract class Fase extends JPanel implements ActionListener, KeyListener {
     public static final int DELAY = 5;
     public static final int QTDE_DE_INIMIGOS = 40;
+    public static final int QTDE_DE_ASTEROIDES = 50;
 
     protected Image fundo;
     protected Personagem personagem;
     protected ArrayList<Inimigo> inimigos;
+    protected ArrayList<Asteroide> asteroides;
     protected Timer timer;
     protected boolean emJogo = true;
 
@@ -25,6 +27,8 @@ public abstract class Fase extends JPanel implements ActionListener, KeyListener
         setDoubleBuffered(true); // + Otimização computacional
         addKeyListener(this); // + Definindo que a própria classe irá controlar os eventos do teclado
     }
+
+    public abstract void inicializaElementosGraficosAdicionais();
 
     public abstract void inicializaInimigos();
 

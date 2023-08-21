@@ -162,4 +162,10 @@ public class FaseDois extends Fase {
         // throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
     }
 
+    @Override
+    public void inicializaElementosGraficosAdicionais() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'inicializaElementosGraficosAdicionais'");
+    }
+
 }

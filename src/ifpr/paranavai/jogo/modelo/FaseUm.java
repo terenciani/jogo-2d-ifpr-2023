@@ -16,16 +16,18 @@ public class FaseUm extends Fase {
 
     public FaseUm() { // Linha adicionada (+)
         super(); // Chamada do construtor da classe super
-        emJogo = true;
+        this.emJogo = true;
         ImageIcon carregando = new ImageIcon("recursos\\fundo.jpg");
-        fundo = carregando.getImage();
+        this.fundo = carregando.getImage();
 
-        personagem = new Personagem(); // + Criação do objeto Personagem
+        this.personagem = new Personagem(); // + Criação do objeto Personagem
+
+        this.inicializaElementosGraficosAdicionais();
 
         this.inicializaInimigos();
 
-        timer = new Timer(DELAY, this); // + Criação do objeto Timer
-        timer.start(); // + Iniciando o nosso jogo
+        this.timer = new Timer(DELAY, this); // + Criação do objeto Timer
+        this.timer.start(); // + Iniciando o nosso jogo
 
     }
 
@@ -46,6 +48,13 @@ public class FaseUm extends Fase {
         Graphics2D graficos = (Graphics2D) g;
         if (emJogo) {
             graficos.drawImage(fundo, 0, 0, null);
+
+            // Criando um laço de repetição (foreach). Iremos percorrer toda a lista.
+            for (Asteroide asteroide : asteroides) {
+                // Desenhar o asteroide na nossa tela.
+                graficos.drawImage(asteroide.getImagem(), asteroide.getPosicaoEmX(), asteroide.getPosicaoEmY(), this);
+            }
+
             graficos.drawImage(personagem.getImagem(), personagem.getPosicaoEmX(), personagem.getPosicaoEmY(), this);
 
             // Recuperar a nossa lista de tiros (getTiros) e atribuímos para uma variável
@@ -86,6 +95,11 @@ public class FaseUm extends Fase {
     @Override
     public void actionPerformed(ActionEvent e) {
         personagem.atualizar();
+
+        // Criando um laço de repetição (foreach). Iremos percorrer toda a lista.
+        for (Asteroide asteroide : this.asteroides) {
+            asteroide.atualizar();
+        }
 
         // Recuperar a nossa lista de tiros (getTiros) e atribuímos para uma variável
         // local chamada tiros.
@@ -143,6 +157,18 @@ public class FaseUm extends Fase {
                     tiro.setEhVisivel(false);
                 }
             }
+        }
+    }
+
+    @Override
+    public void inicializaElementosGraficosAdicionais() {
+        super.asteroides = new ArrayList<Asteroide>();
+
+        for (int i = 0; i < QTDE_DE_ASTEROIDES; i++) {
+            int x = (int) (Math.random() * Principal.LARGURA_DA_JANELA);
+            int y = (int) (Math.random() * Principal.ALTURA_DA_JANELA);
+            Asteroide asteroide = new Asteroide(x, y);
+            super.asteroides.add(asteroide);
         }
     }
 }
