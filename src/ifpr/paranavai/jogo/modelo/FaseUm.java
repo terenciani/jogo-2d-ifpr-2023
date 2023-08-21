@@ -64,7 +64,7 @@ public class FaseUm extends Fase {
                 graficos.drawImage(inimigo.getImagem(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
             }
         } else {
-            ImageIcon fimDeJogo = new ImageIcon("recursos\\fimdejogo2.jpg");
+            ImageIcon fimDeJogo = new ImageIcon("recursos\\fimdejogo.jpg");
             graficos.drawImage(fimDeJogo.getImage(), 0, 0, this);
         }
         g.dispose();
