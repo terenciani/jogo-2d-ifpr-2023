@@ -13,6 +13,10 @@ import javax.swing.Timer;
 import ifpr.paranavai.jogo.principal.Principal;
 
 public class FaseUm extends Fase {
+    private static final int DELAY = 5;
+    private static final int QTDE_DE_INIMIGOS = 40;
+    private static final int QTDE_DE_ASTEROIDES = 50;
+    private static final int PONTOS_POR_INIMIGO = 10;
 
     public FaseUm() { // Linha adicionada (+)
         super(); // Chamada do construtor da classe super
@@ -72,6 +76,7 @@ public class FaseUm extends Fase {
                 // Desenhar o inimigo na nossa tela.
                 graficos.drawImage(inimigo.getImagem(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
             }
+            super.desenhaPontuacao(graficos);
         } else {
             ImageIcon fimDeJogo = new ImageIcon("recursos\\fimdejogo.jpg");
             graficos.drawImage(fimDeJogo.getImage(), 0, 0, this);
@@ -153,6 +158,8 @@ public class FaseUm extends Fase {
                 Tiro tiro = tiros.get(j);
                 Rectangle formaTiro = tiro.getRectangle();
                 if (formaInimigo.intersects(formaTiro)) {
+                    int pontuacaoAtual = this.personagem.getPontuacao();
+                    this.personagem.setPontuacao(pontuacaoAtual + PONTOS_POR_INIMIGO);
                     inimigo.setEhVisivel(false);
                     tiro.setEhVisivel(false);
                 }

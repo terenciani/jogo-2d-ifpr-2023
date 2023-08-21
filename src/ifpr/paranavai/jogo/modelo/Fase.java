@@ -1,5 +1,6 @@
 package ifpr.paranavai.jogo.modelo;
 
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,10 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public abstract class Fase extends JPanel implements ActionListener, KeyListener {
-    public static final int DELAY = 5;
-    public static final int QTDE_DE_INIMIGOS = 40;
-    public static final int QTDE_DE_ASTEROIDES = 50;
-
     protected Image fundo;
     protected Personagem personagem;
     protected ArrayList<Inimigo> inimigos;
@@ -46,4 +43,11 @@ public abstract class Fase extends JPanel implements ActionListener, KeyListener
 
     @Override
     public abstract void actionPerformed(ActionEvent e);
+
+    public void desenhaPontuacao(Graphics2D graficos) {
+        String textoPontuacao = "PONTOS: " + personagem.getPontuacao();
+        graficos.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 22));
+        graficos.setColor(new java.awt.Color(255, 255, 255));
+        graficos.drawString(textoPontuacao, 20, 25);
+    }
 }

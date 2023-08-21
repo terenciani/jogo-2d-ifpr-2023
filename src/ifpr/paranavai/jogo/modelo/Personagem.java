@@ -12,6 +12,7 @@ public class Personagem extends ElementoGrafico {
 
     private int deslocamentoEmX;
     private int deslocamentoEmY;
+    private int pontuacao;
 
     private ArrayList<Tiro> tiros;
 
@@ -97,5 +98,17 @@ public class Personagem extends ElementoGrafico {
 
     public void setTiros(ArrayList<Tiro> tiros) {
         this.tiros = tiros;
+    }
+
+    public void setDeslocamentoEmY(int deslocamentoEmY) {
+        this.deslocamentoEmY = deslocamentoEmY;
+    }
+
+    public int getPontuacao() {
+        return this.pontuacao;
+    }
+
+    public void setPontuacao(int pontuacao) {
+        this.pontuacao = pontuacao;
     }
 }
