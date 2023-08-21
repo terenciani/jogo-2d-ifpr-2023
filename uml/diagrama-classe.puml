@@ -29,7 +29,8 @@ abstract class ElementoGrafico <<abstract>> {
     -Image imagem
     -int larguraImagem
     -int alturaImagem 
-    -boolean ehVisivel   
+    -boolean ehVisivel
+    __
     +{abstract} void carregar()
     +{abstract} void atualizar()
     +Rectangle getRectangle()
@@ -53,6 +54,7 @@ abstract class Fase <<abstract>>{
 class Personagem{
     -int deslocamentoEmX
     -int deslocamentoEmY
+    __
     +Personagem()
     +void atirar()
     +void mover(KeyEvent tecla)
