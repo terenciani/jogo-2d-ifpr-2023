@@ -3,6 +3,7 @@
 title Diagrama de Classes - com Herança, Classe Abstrata (sem) Interface
 
 package ifpr.paranavai.jogo.modelo <<Frame>> {
+    class Asteroide
     class Fase
     class FaseUm
     class FaseDois
@@ -21,6 +22,10 @@ package java.awt.event <<Frame>> {
 
 package javax.swing <<Frame>> {
   class JPanel
+}
+
+class Asteroide{
+    +Asteroide(int xAleatorio, int yAleatorio)
 }
 
 abstract class ElementoGrafico <<abstract>> {
@@ -96,6 +101,7 @@ FaseDois -left-|> Fase: extends
 
 Fase "1" *-left-> "1" Personagem
 Inimigo "*" <-up- "1" Fase
+Asteroide "*" <-up- "1" Fase
 
 Personagem "1" *--> "*" Tiro
 Personagem --|> ElementoGrafico: extends
@@ -103,4 +109,6 @@ Personagem --|> ElementoGrafico: extends
 Tiro --|> ElementoGrafico: extends
 
 Inimigo --|> ElementoGrafico: extends
+
+Asteroide --|> ElementoGrafico: extends
 @enduml
