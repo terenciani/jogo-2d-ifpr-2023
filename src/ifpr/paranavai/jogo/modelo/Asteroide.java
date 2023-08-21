@@ -1,6 +1,5 @@
 package ifpr.paranavai.jogo.modelo;
 
-import java.awt.Image;
 import javax.swing.ImageIcon;
 
 import ifpr.paranavai.jogo.principal.Principal;
@@ -22,10 +21,9 @@ public class Asteroide extends ElementoGrafico {
     @Override
     public void atualizar() {
         if (this.getPosicaoEmX() < 0) {
-            int x = (int) (Math.random() * Principal.LARGURA_DA_JANELA);
             int y = (int) (Math.random() * Principal.ALTURA_DA_JANELA);
-            super.setPosicaoEmX(x);
-            super.setPosicaoEmX(y);
+            super.setPosicaoEmX(Principal.LARGURA_DA_JANELA);
+            super.setPosicaoEmY(y);
         } else {
             super.setPosicaoEmX(super.getPosicaoEmX() - VELOCIDADE);
         }
