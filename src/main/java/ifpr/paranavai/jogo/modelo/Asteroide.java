@@ -14,7 +14,7 @@ public class Asteroide extends ElementoGrafico {
     }
 
     public void carregar() {
-        ImageIcon carregando = new ImageIcon("recursos\\asteroide.png");
+        ImageIcon carregando = new ImageIcon(getClass().getResource("/asteroide.png"));
         super.setImagem(carregando.getImage());
     }
 

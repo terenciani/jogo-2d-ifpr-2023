@@ -24,7 +24,7 @@ public class Personagem extends ElementoGrafico {
     }
 
     public void carregar() {
-        ImageIcon carregando = new ImageIcon("recursos\\espaconave.png");
+        ImageIcon carregando = new ImageIcon(getClass().getResource("/espaconave.png"));
         super.setImagem(carregando.getImage());
     }
 

@@ -12,7 +12,7 @@ public class Inimigo extends ElementoGrafico {
     }
 
     public void carregar() {
-        ImageIcon carregando = new ImageIcon("recursos\\inimigo.png");
+        ImageIcon carregando = new ImageIcon(getClass().getResource("/inimigo.png"));
         super.setImagem(carregando.getImage());
     }
 

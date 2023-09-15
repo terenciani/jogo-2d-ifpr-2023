@@ -21,7 +21,7 @@ public class FaseUm extends Fase {
     public FaseUm() { // Linha adicionada (+)
         super(); // Chamada do construtor da classe super
         this.emJogo = true;
-        ImageIcon carregando = new ImageIcon("recursos\\fundo.jpg");
+        ImageIcon carregando = new ImageIcon(getClass().getResource("/fundo.jpg"));
         this.fundo = carregando.getImage();
 
         this.personagem = new Personagem(); // + Criação do objeto Personagem
@@ -78,7 +78,7 @@ public class FaseUm extends Fase {
             }
             super.desenhaPontuacao(graficos);
         } else {
-            ImageIcon fimDeJogo = new ImageIcon("recursos\\fimdejogo.jpg");
+            ImageIcon fimDeJogo = new ImageIcon(getClass().getResource("/fimdejogo.jpg"));
             graficos.drawImage(fimDeJogo.getImage(), 0, 0, this);
         }
         g.dispose();

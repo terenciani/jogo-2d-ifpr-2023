@@ -26,7 +26,7 @@ public class FaseDois extends Fase {
     public FaseDois() { // Linha adicionada (+)
         setFocusable(true); // + define o foco inicial do jogo
         setDoubleBuffered(true); // + Otimização computacional
-        ImageIcon carregando = new ImageIcon("recursos\\fundo.jpg");
+        ImageIcon carregando = new ImageIcon(getClass().getResource("/fundo.jpg"));
         fundo = carregando.getImage();
 
         personagem = new Personagem(); // + Criação do objeto Personagem
@@ -75,7 +75,7 @@ public class FaseDois extends Fase {
                 graficos.drawImage(inimigo.getImagem(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
             }
         } else {
-            ImageIcon fimDeJogo = new ImageIcon("recursos\\fimdejogo.png");
+            ImageIcon fimDeJogo = new ImageIcon(getClass().getResource("/fimdejogo.png"));
             graficos.drawImage(fimDeJogo.getImage(), 0, 0, null);
         }
         g.dispose();

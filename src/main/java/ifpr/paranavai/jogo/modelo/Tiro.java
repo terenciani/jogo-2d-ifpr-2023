@@ -14,7 +14,7 @@ public class Tiro extends ElementoGrafico {
 
     @Override
     public void carregar() {
-        ImageIcon carregando = new ImageIcon("recursos\\tiro.png");
+        ImageIcon carregando = new ImageIcon(getClass().getResource("/tiro.png"));
         super.setImagem(carregando.getImage());
     }
 
