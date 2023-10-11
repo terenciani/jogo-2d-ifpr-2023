@@ -1,6 +1,9 @@
 package ifpr.paranavai.jogo.modelo;
 
-public class TiroSuper extends ElementoGrafico{
+import javax.persistence.Entity;
+
+@Entity
+public class TiroSuper extends ElementoGrafico {
 
     @Override
     public void carregar() {
@@ -13,5 +16,5 @@ public class TiroSuper extends ElementoGrafico{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'atualizar'");
     }
-    
+
 }

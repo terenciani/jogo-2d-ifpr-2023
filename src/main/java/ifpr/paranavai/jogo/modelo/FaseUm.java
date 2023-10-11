@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
@@ -63,7 +64,7 @@ public class FaseUm extends Fase {
 
             // Recuperar a nossa lista de tiros (getTiros) e atribuímos para uma variável
             // local chamada tiros.
-            ArrayList<Tiro> tiros = personagem.getTiros();
+            List<Tiro> tiros = personagem.getTiros();
 
             // Criando um laço de repetição (foreach). Iremos percorrer toda a lista.
             for (Tiro tiro : tiros) {
@@ -108,7 +109,7 @@ public class FaseUm extends Fase {
 
         // Recuperar a nossa lista de tiros (getTiros) e atribuímos para uma variável
         // local chamada tiros.
-        ArrayList<Tiro> tiros = personagem.getTiros();
+        List<Tiro> tiros = personagem.getTiros();
 
         // Criando um laço de repetição (for). Iremos percorrer toda a lista.
         for (int i = 0; i < tiros.size(); i++) {
@@ -153,7 +154,7 @@ public class FaseUm extends Fase {
                 inimigo.setEhVisivel(false);
                 emJogo = false;
             }
-            ArrayList<Tiro> tiros = this.personagem.getTiros();
+            List<Tiro> tiros = this.personagem.getTiros();
             for (int j = 0; j < tiros.size(); j++) {
                 Tiro tiro = tiros.get(j);
                 Rectangle formaTiro = tiro.getRectangle();

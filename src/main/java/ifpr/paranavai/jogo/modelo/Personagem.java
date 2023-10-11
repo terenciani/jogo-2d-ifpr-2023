@@ -2,19 +2,32 @@ package ifpr.paranavai.jogo.modelo;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.swing.ImageIcon;
 
+@Entity
+@Table(name = "tb_personagem")
 public class Personagem extends ElementoGrafico {
     private static final int DESLOCAMENTO = 3;
     private static final int POSICAO_INICIAL_EM_X = 100;
     private static final int POSICAO_INICIAL_EM_Y = 100;
 
+    @Column(name = "deslocamento_em_x")
     private int deslocamentoEmX;
+
+    @Column(name = "deslocamento_em_y")
     private int deslocamentoEmY;
+
+    @Column(name = "pontuacao")
     private int pontuacao;
 
-    private ArrayList<Tiro> tiros;
+    @OneToMany(mappedBy = "personagem")
+    private List<Tiro> tiros;
 
     public Personagem() {
         this.carregar();
@@ -92,11 +105,11 @@ public class Personagem extends ElementoGrafico {
         return this.deslocamentoEmY;
     }
 
-    public ArrayList<Tiro> getTiros() {
+    public List<Tiro> getTiros() {
         return this.tiros;
     }
 
-    public void setTiros(ArrayList<Tiro> tiros) {
+    public void setTiros(List<Tiro> tiros) {
         this.tiros = tiros;
     }
 

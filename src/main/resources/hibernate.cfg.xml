@@ -20,6 +20,11 @@
 
     <!-- Classes que serão persistidas no tutorial -->
     <mapping class="ifpr.paranavai.jogo.modelo.Jogador" />
+    <mapping class="ifpr.paranavai.jogo.modelo.ElementoGrafico" />
+    <mapping class="ifpr.paranavai.jogo.modelo.Personagem" />
+    <mapping class="ifpr.paranavai.jogo.modelo.Inimigo" />
+    <mapping class="ifpr.paranavai.jogo.modelo.Tiro" />
+    <mapping class="ifpr.paranavai.jogo.modelo.Asteroide" />
     
 
     <!-- Classes que serão persistidas em sala e/ou trabalho -->
