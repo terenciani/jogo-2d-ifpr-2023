@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
+import ifpr.paranavai.jogo.controle.FaseUmControle;
 import ifpr.paranavai.jogo.modelo.Asteroide;
 import ifpr.paranavai.jogo.modelo.Inimigo;
 import ifpr.paranavai.jogo.modelo.Personagem;
@@ -21,20 +22,20 @@ public class FaseUmVisao extends FaseVisao {
     private static final int DESLOCAMENTO = 3;
     private static final int DELAY = 5;
     private static final int QTDE_DE_INIMIGOS = 40;
-    private static final int QTDE_DE_ASTEROIDES = 50;
     private static final int PONTOS_POR_INIMIGO = 10;
     private static final int POSICAO_INICIAL_PERSONAGEM_EM_X = 100;
     private static final int POSICAO_INICIAL_PERSONAGEM_EM_Y = 100;
 
+    private FaseUmControle controle;
+
     public FaseUmVisao() {
         super();
+        this.controle = new FaseUmControle();
         this.emJogo = true;
         ImageIcon carregando = new ImageIcon(getClass().getResource("/fundo.jpg"));
         this.fundo = carregando.getImage();
-
-        this.personagem = new Personagem(POSICAO_INICIAL_PERSONAGEM_EM_X, POSICAO_INICIAL_PERSONAGEM_EM_Y);
-
-        this.inicializaElementosGraficosAdicionais();
+        this.fase.setPersonagem(new Personagem(POSICAO_INICIAL_PERSONAGEM_EM_X, POSICAO_INICIAL_PERSONAGEM_EM_Y));
+        controle.inicializaElementosGraficosAdicionais(super.fase);
 
         this.inicializaInimigos();
 
@@ -58,11 +59,12 @@ public class FaseUmVisao extends FaseVisao {
     @Override
     public void paint(Graphics g) {
         Graphics2D graficos = (Graphics2D) g;
+        Personagem personagem = this.fase.getPersonagem();
         if (emJogo) {
             graficos.drawImage(fundo, 0, 0, null);
 
             // Criando um laço de repetição (foreach). Iremos percorrer toda a lista.
-            for (Asteroide asteroide : asteroides) {
+            for (Asteroide asteroide : super.fase.getAsteroides()) {
                 // Desenhar o asteroide na nossa tela.
                 graficos.drawImage(asteroide.getImagem(), asteroide.getPosicaoEmX(), asteroide.getPosicaoEmY(), this);
             }
@@ -84,7 +86,7 @@ public class FaseUmVisao extends FaseVisao {
                 // Desenhar o inimigo na nossa tela.
                 graficos.drawImage(inimigo.getImagem(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
             }
-            super.desenhaPontuacao(graficos);
+            controle.desenhaPontuacao(graficos, super.fase);
         } else {
             ImageIcon fimDeJogo = new ImageIcon(getClass().getResource("/fimdejogo.jpg"));
             graficos.drawImage(fimDeJogo.getImage(), 0, 0, this);
@@ -95,24 +97,25 @@ public class FaseUmVisao extends FaseVisao {
     @Override
     public void keyPressed(KeyEvent e) {
         int codigo = e.getKeyCode();
+        Personagem personagem = this.fase.getPersonagem();
         if (codigo == KeyEvent.VK_SPACE) {
-            int frenteDaNave = super.personagem.getPosicaoEmX() + super.personagem.getLarguraImagem();
-            int meioDaNave = super.personagem.getPosicaoEmY() + (super.personagem.getAlturaImagem() / 2);
+            int frenteDaNave = personagem.getPosicaoEmX() + personagem.getLarguraImagem();
+            int meioDaNave = personagem.getPosicaoEmY() + (personagem.getAlturaImagem() / 2);
             Tiro tiro = new Tiro(frenteDaNave, meioDaNave);
-            super.personagem.getTiros().add(tiro);
+            personagem.getTiros().add(tiro);
         } else {
             switch (codigo) {
                 case KeyEvent.VK_UP:
-                    this.personagem.setDeslocamentoEmY(-DESLOCAMENTO);
+                    personagem.setDeslocamentoEmY(-DESLOCAMENTO);
                     break;
                 case KeyEvent.VK_DOWN:
-                    this.personagem.setDeslocamentoEmY(DESLOCAMENTO);
+                    personagem.setDeslocamentoEmY(DESLOCAMENTO);
                     break;
                 case KeyEvent.VK_LEFT:
-                    this.personagem.setDeslocamentoEmX(-DESLOCAMENTO);
+                    personagem.setDeslocamentoEmX(-DESLOCAMENTO);
                     break;
                 case KeyEvent.VK_RIGHT:
-                    this.personagem.setDeslocamentoEmX(DESLOCAMENTO);
+                    personagem.setDeslocamentoEmX(DESLOCAMENTO);
                     break;
                 default:
                     break;
@@ -122,19 +125,20 @@ public class FaseUmVisao extends FaseVisao {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        Personagem personagem = this.fase.getPersonagem();
         int codigo = e.getKeyCode();
         switch (codigo) {
             case KeyEvent.VK_UP:
-                this.personagem.setDeslocamentoEmY(0);
+                personagem.setDeslocamentoEmY(0);
                 break;
             case KeyEvent.VK_DOWN:
-                this.personagem.setDeslocamentoEmY(0);
+                personagem.setDeslocamentoEmY(0);
                 break;
             case KeyEvent.VK_LEFT:
-                this.personagem.setDeslocamentoEmX(0);
+                personagem.setDeslocamentoEmX(0);
                 break;
             case KeyEvent.VK_RIGHT:
-                this.personagem.setDeslocamentoEmX(0);
+                personagem.setDeslocamentoEmX(0);
                 break;
             default:
                 break;
@@ -143,16 +147,16 @@ public class FaseUmVisao extends FaseVisao {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        personagem.atualizar();
+        super.fase.getPersonagem().atualizar();
 
         // Criando um laço de repetição (foreach). Iremos percorrer toda a lista.
-        for (Asteroide asteroide : this.asteroides) {
+        for (Asteroide asteroide : this.fase.getAsteroides()) {
             asteroide.atualizar();
         }
 
         // Recuperar a nossa lista de tiros (getTiros) e atribuímos para uma variável
         // local chamada tiros.
-        List<Tiro> tiros = personagem.getTiros();
+        List<Tiro> tiros = super.fase.getPersonagem().getTiros();
 
         // Criando um laço de repetição (for). Iremos percorrer toda a lista.
         for (int i = 0; i < tiros.size(); i++) {
@@ -187,39 +191,27 @@ public class FaseUmVisao extends FaseVisao {
 
     @Override
     public void verificarColisoes() {
-        Rectangle formaPersonagem = this.personagem.getRectangle();
+        Rectangle formaPersonagem = super.fase.getPersonagem().getRectangle();
 
         for (int i = 0; i < this.inimigos.size(); i++) {
             Inimigo inimigo = inimigos.get(i);
             Rectangle formaInimigo = inimigo.getRectangle();
             if (formaInimigo.intersects(formaPersonagem)) {
-                this.personagem.setEhVisivel(false);
+                super.fase.getPersonagem().setEhVisivel(false);
                 inimigo.setEhVisivel(false);
                 emJogo = false;
             }
-            List<Tiro> tiros = this.personagem.getTiros();
+            List<Tiro> tiros = super.fase.getPersonagem().getTiros();
             for (int j = 0; j < tiros.size(); j++) {
                 Tiro tiro = tiros.get(j);
                 Rectangle formaTiro = tiro.getRectangle();
                 if (formaInimigo.intersects(formaTiro)) {
-                    int pontuacaoAtual = this.personagem.getPontuacao();
-                    this.personagem.setPontuacao(pontuacaoAtual + PONTOS_POR_INIMIGO);
+                    int pontuacaoAtual = super.fase.getPersonagem().getPontuacao();
+                    super.fase.getPersonagem().setPontuacao(pontuacaoAtual + PONTOS_POR_INIMIGO);
                     inimigo.setEhVisivel(false);
                     tiro.setEhVisivel(false);
                 }
             }
-        }
-    }
-
-    @Override
-    public void inicializaElementosGraficosAdicionais() {
-        super.asteroides = new ArrayList<Asteroide>();
-
-        for (int i = 0; i < QTDE_DE_ASTEROIDES; i++) {
-            int x = (int) (Math.random() * PrincipalVisao.LARGURA_DA_JANELA);
-            int y = (int) (Math.random() * PrincipalVisao.ALTURA_DA_JANELA);
-            Asteroide asteroide = new Asteroide(x, y);
-            super.asteroides.add(asteroide);
         }
     }
 
