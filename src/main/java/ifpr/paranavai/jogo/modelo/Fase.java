@@ -1,53 +1,75 @@
 package ifpr.paranavai.jogo.modelo;
 
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-public abstract class Fase extends JPanel implements ActionListener, KeyListener {
-    protected Image fundo;
-    protected Personagem personagem;
-    protected List<Inimigo> inimigos;
-    protected List<Asteroide> asteroides;
-    protected Timer timer;
-    protected boolean emJogo = true;
+@Entity
+@Table(name = "tb_fase")
+public class Fase {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_fase")
+    private Integer idElementoGrafico;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_personagem")
+    private Personagem personagem;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_fase")
+    private List<Inimigo> inimigos;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_fase")
+    private List<Asteroide> asteroides;
 
     public Fase() {
-        setFocusable(true); // + define o foco inicial do jogo
-        setDoubleBuffered(true); // + Otimização computacional
-        addKeyListener(this); // + Definindo que a própria classe irá controlar os eventos do teclado
+        this.personagem = new Personagem();
+        this.inimigos = new ArrayList<Inimigo>();
+        this.asteroides = new ArrayList<Asteroide>();
     }
 
-    public abstract void inicializaElementosGraficosAdicionais();
-
-    public abstract void inicializaInimigos();
-
-    public abstract void verificarColisoes();
-
-    @Override
-    public void keyTyped(KeyEvent e) {
+    public Integer getIdElementoGrafico() {
+        return this.idElementoGrafico;
     }
 
-    @Override
-    public abstract void keyPressed(KeyEvent e);
-
-    @Override
-    public abstract void keyReleased(KeyEvent e);
-
-    @Override
-    public abstract void actionPerformed(ActionEvent e);
-
-    public void desenhaPontuacao(Graphics2D graficos) {
-        String textoPontuacao = "PONTOS: " + personagem.getPontuacao();
-        graficos.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 22));
-        graficos.setColor(new java.awt.Color(255, 255, 255));
-        graficos.drawString(textoPontuacao, 20, 25);
+    public void setIdElementoGrafico(Integer idElementoGrafico) {
+        this.idElementoGrafico = idElementoGrafico;
     }
+
+    public Personagem getPersonagem() {
+        return this.personagem;
+    }
+
+    public void setPersonagem(Personagem personagem) {
+        this.personagem = personagem;
+    }
+
+    public List<Inimigo> getInimigos() {
+        return this.inimigos;
+    }
+
+    public void setInimigos(List<Inimigo> inimigos) {
+        this.inimigos = inimigos;
+    }
+
+    public List<Asteroide> getAsteroides() {
+        return this.asteroides;
+    }
+
+    public void setAsteroides(List<Asteroide> asteroides) {
+        this.asteroides = asteroides;
+    }
+
 }

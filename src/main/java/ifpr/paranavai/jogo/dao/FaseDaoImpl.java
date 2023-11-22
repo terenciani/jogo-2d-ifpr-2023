@@ -6,33 +6,33 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import ifpr.paranavai.jogo.conexao.HibernateUtil;
-import ifpr.paranavai.jogo.modelo.Jogador;
+import ifpr.paranavai.jogo.modelo.Fase;
 
-public class JogadorDaoImpl implements JogadorDao {
+public class FaseDaoImpl implements FaseDao {
 
     private Session sessao;
 
-    public JogadorDaoImpl() {
+    public FaseDaoImpl() {
         this.sessao = HibernateUtil.getSession();
     }
 
     @Override
-    public List<Jogador> buscarTodos() {
-        Query<Jogador> query = this.sessao.createQuery("from Jogador", Jogador.class);
-        List<Jogador> jogadores = query.getResultList();
-        return jogadores;
+    public List<Fase> buscarTodos() {
+        Query<Fase> query = this.sessao.createQuery("from Fase", Fase.class);
+        List<Fase> fasees = query.getResultList();
+        return fasees;
     }
 
     @Override
-    public Jogador buscarPorId(Integer id) {
-        return this.sessao.find(Jogador.class, id);
+    public Fase buscarPorId(Integer id) {
+        return this.sessao.find(Fase.class, id);
     }
 
     @Override
-    public void inserir(Jogador jogador) {
+    public void inserir(Fase fase) {
         try {
             sessao.beginTransaction();
-            sessao.persist(jogador);
+            sessao.persist(fase);
             sessao.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,10 +40,10 @@ public class JogadorDaoImpl implements JogadorDao {
     }
 
     @Override
-    public void atualizar(Jogador jogador) {
+    public void atualizar(Fase fase) {
         try {
             sessao.beginTransaction();
-            sessao.merge(jogador);
+            sessao.merge(fase);
             sessao.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,10 +51,10 @@ public class JogadorDaoImpl implements JogadorDao {
     }
 
     @Override
-    public void excluir(Jogador jogador) {
+    public void excluir(Fase fase) {
         try {
             sessao.beginTransaction();
-            sessao.remove(jogador);
+            sessao.remove(fase);
             sessao.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();

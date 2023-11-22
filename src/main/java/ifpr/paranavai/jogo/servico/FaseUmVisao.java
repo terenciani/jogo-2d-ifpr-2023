@@ -1,4 +1,4 @@
-package ifpr.paranavai.jogo.modelo;
+package ifpr.paranavai.jogo.servico;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -11,28 +11,35 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
-import ifpr.paranavai.jogo.principal.Principal;
+import ifpr.paranavai.jogo.modelo.Asteroide;
+import ifpr.paranavai.jogo.modelo.Inimigo;
+import ifpr.paranavai.jogo.modelo.Personagem;
+import ifpr.paranavai.jogo.modelo.Tiro;
+import ifpr.paranavai.jogo.principal.PrincipalVisao;
 
-public class FaseUm extends Fase {
+public class FaseUmVisao extends FaseVisao {
+    private static final int DESLOCAMENTO = 3;
     private static final int DELAY = 5;
     private static final int QTDE_DE_INIMIGOS = 40;
     private static final int QTDE_DE_ASTEROIDES = 50;
     private static final int PONTOS_POR_INIMIGO = 10;
+    private static final int POSICAO_INICIAL_PERSONAGEM_EM_X = 100;
+    private static final int POSICAO_INICIAL_PERSONAGEM_EM_Y = 100;
 
-    public FaseUm() { // Linha adicionada (+)
-        super(); // Chamada do construtor da classe super
+    public FaseUmVisao() {
+        super();
         this.emJogo = true;
         ImageIcon carregando = new ImageIcon(getClass().getResource("/fundo.jpg"));
         this.fundo = carregando.getImage();
 
-        this.personagem = new Personagem(); // + Criação do objeto Personagem
+        this.personagem = new Personagem(POSICAO_INICIAL_PERSONAGEM_EM_X, POSICAO_INICIAL_PERSONAGEM_EM_Y);
 
         this.inicializaElementosGraficosAdicionais();
 
         this.inicializaInimigos();
 
-        this.timer = new Timer(DELAY, this); // + Criação do objeto Timer
-        this.timer.start(); // + Iniciando o nosso jogo
+        this.timer = new Timer(DELAY, this);
+        this.timer.start();
 
     }
 
@@ -41,8 +48,8 @@ public class FaseUm extends Fase {
         inimigos = new ArrayList<Inimigo>();
 
         for (int i = 0; i < QTDE_DE_INIMIGOS; i++) {
-            int x = (int) ((Math.random() * 8000) + Principal.LARGURA_DA_JANELA);
-            int y = (int) (Math.random() * Principal.ALTURA_DA_JANELA);
+            int x = (int) ((Math.random() * 8000) + PrincipalVisao.LARGURA_DA_JANELA);
+            int y = (int) (Math.random() * PrincipalVisao.ALTURA_DA_JANELA);
             Inimigo inimigo = new Inimigo(x, y);
             inimigos.add(inimigo);
         }
@@ -87,15 +94,51 @@ public class FaseUm extends Fase {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_SPACE)
-            personagem.atirar();
-        else
-            personagem.mover(e);
+        int codigo = e.getKeyCode();
+        if (codigo == KeyEvent.VK_SPACE) {
+            int frenteDaNave = super.personagem.getPosicaoEmX() + super.personagem.getLarguraImagem();
+            int meioDaNave = super.personagem.getPosicaoEmY() + (super.personagem.getAlturaImagem() / 2);
+            Tiro tiro = new Tiro(frenteDaNave, meioDaNave);
+            super.personagem.getTiros().add(tiro);
+        } else {
+            switch (codigo) {
+                case KeyEvent.VK_UP:
+                    this.personagem.setDeslocamentoEmY(-DESLOCAMENTO);
+                    break;
+                case KeyEvent.VK_DOWN:
+                    this.personagem.setDeslocamentoEmY(DESLOCAMENTO);
+                    break;
+                case KeyEvent.VK_LEFT:
+                    this.personagem.setDeslocamentoEmX(-DESLOCAMENTO);
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    this.personagem.setDeslocamentoEmX(DESLOCAMENTO);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        personagem.parar(e);
+        int codigo = e.getKeyCode();
+        switch (codigo) {
+            case KeyEvent.VK_UP:
+                this.personagem.setDeslocamentoEmY(0);
+                break;
+            case KeyEvent.VK_DOWN:
+                this.personagem.setDeslocamentoEmY(0);
+                break;
+            case KeyEvent.VK_LEFT:
+                this.personagem.setDeslocamentoEmX(0);
+                break;
+            case KeyEvent.VK_RIGHT:
+                this.personagem.setDeslocamentoEmX(0);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -117,7 +160,7 @@ public class FaseUm extends Fase {
             Tiro tiro = tiros.get(i);
             // Verificar se (if) a posição do x (tiro.getPosicaoEmX()) é maior do que a
             // largura da nossa janela
-            if (tiro.getPosicaoEmX() > Principal.LARGURA_DA_JANELA || !tiro.getEhVisivel())
+            if (tiro.getPosicaoEmX() > PrincipalVisao.LARGURA_DA_JANELA || !tiro.getEhVisivel())
                 // Remover da lista se estiver fora do campo de visão (LARGURA_DA_JANELA)
                 tiros.remove(tiro);
             else
@@ -173,10 +216,14 @@ public class FaseUm extends Fase {
         super.asteroides = new ArrayList<Asteroide>();
 
         for (int i = 0; i < QTDE_DE_ASTEROIDES; i++) {
-            int x = (int) (Math.random() * Principal.LARGURA_DA_JANELA);
-            int y = (int) (Math.random() * Principal.ALTURA_DA_JANELA);
+            int x = (int) (Math.random() * PrincipalVisao.LARGURA_DA_JANELA);
+            int y = (int) (Math.random() * PrincipalVisao.ALTURA_DA_JANELA);
             Asteroide asteroide = new Asteroide(x, y);
             super.asteroides.add(asteroide);
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
     }
 }

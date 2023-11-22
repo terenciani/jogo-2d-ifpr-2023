@@ -1,11 +1,12 @@
 package ifpr.paranavai.jogo.modelo;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.swing.ImageIcon;
@@ -13,9 +14,6 @@ import javax.swing.ImageIcon;
 @Entity
 @Table(name = "tb_personagem")
 public class Personagem extends ElementoGrafico {
-    private static final int DESLOCAMENTO = 3;
-    private static final int POSICAO_INICIAL_EM_X = 100;
-    private static final int POSICAO_INICIAL_EM_Y = 100;
 
     @Column(name = "deslocamento_em_x")
     private int deslocamentoEmX;
@@ -26,14 +24,19 @@ public class Personagem extends ElementoGrafico {
     @Column(name = "pontuacao")
     private int pontuacao;
 
-    @OneToMany(mappedBy = "personagem")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_personagem")
     private List<Tiro> tiros;
 
     public Personagem() {
         this.carregar();
-        super.setPosicaoEmX(POSICAO_INICIAL_EM_X);
-        super.setPosicaoEmY(POSICAO_INICIAL_EM_Y);
         this.tiros = new ArrayList<Tiro>();
+    }
+
+    public Personagem(int posicaoEmX, int posicaoEmY) {
+        this();
+        super.setPosicaoEmX(posicaoEmX);
+        super.setPosicaoEmY(posicaoEmY);
     }
 
     public void carregar() {
@@ -44,53 +47,6 @@ public class Personagem extends ElementoGrafico {
     public void atualizar() {
         super.setPosicaoEmX(super.getPosicaoEmX() + this.deslocamentoEmX);
         super.setPosicaoEmY(super.getPosicaoEmY() + this.deslocamentoEmY);
-    }
-
-    public void atirar() {
-        int frenteDaNave = super.getPosicaoEmX() + super.getLarguraImagem();
-        int meioDaNave = super.getPosicaoEmY() + (super.getAlturaImagem() / 2);
-        Tiro tiro = new Tiro(frenteDaNave, meioDaNave);
-        this.tiros.add(tiro);
-    }
-
-    public void mover(KeyEvent tecla) {
-        int codigo = tecla.getKeyCode();
-        switch (codigo) {
-            case KeyEvent.VK_UP:
-                this.deslocamentoEmY = -DESLOCAMENTO;
-                break;
-            case KeyEvent.VK_DOWN:
-                this.deslocamentoEmY = DESLOCAMENTO;
-                break;
-            case KeyEvent.VK_LEFT:
-                this.deslocamentoEmX = -DESLOCAMENTO;
-                break;
-            case KeyEvent.VK_RIGHT:
-                this.deslocamentoEmX = DESLOCAMENTO;
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void parar(KeyEvent tecla) {
-        int codigo = tecla.getKeyCode();
-        switch (codigo) {
-            case KeyEvent.VK_UP:
-                deslocamentoEmY = 0;
-                break;
-            case KeyEvent.VK_DOWN:
-                deslocamentoEmY = 0;
-                break;
-            case KeyEvent.VK_LEFT:
-                deslocamentoEmX = 0;
-                break;
-            case KeyEvent.VK_RIGHT:
-                deslocamentoEmX = 0;
-                break;
-            default:
-                break;
-        }
     }
 
     public int getDeslocamentoEmX() {

@@ -4,12 +4,15 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.swing.ImageIcon;
 
-import ifpr.paranavai.jogo.principal.Principal;
+import ifpr.paranavai.jogo.principal.PrincipalVisao;
 
 @Entity
 @Table(name = "tb_asteroide")
 public class Asteroide extends ElementoGrafico {
     private static int VELOCIDADE = 1;
+
+    public Asteroide() {
+    }
 
     public Asteroide(int xAleatorio, int yAleatorio) {
         this.carregar();
@@ -25,8 +28,8 @@ public class Asteroide extends ElementoGrafico {
     @Override
     public void atualizar() {
         if (this.getPosicaoEmX() < 0) {
-            int y = (int) (Math.random() * Principal.ALTURA_DA_JANELA);
-            super.setPosicaoEmX(Principal.LARGURA_DA_JANELA);
+            int y = (int) (Math.random() * PrincipalVisao.ALTURA_DA_JANELA);
+            super.setPosicaoEmX(PrincipalVisao.LARGURA_DA_JANELA);
             super.setPosicaoEmY(y);
         } else {
             super.setPosicaoEmX(super.getPosicaoEmX() - VELOCIDADE);
