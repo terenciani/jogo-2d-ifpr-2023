@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.swing.ImageIcon;
 
-import ifpr.paranavai.jogo.principal.PrincipalVisao;
+import ifpr.paranavai.jogo.visao.PrincipalVisao;
 
 @Entity
 @Table(name = "tb_asteroide")
