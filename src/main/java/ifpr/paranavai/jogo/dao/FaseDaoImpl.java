@@ -19,8 +19,8 @@ public class FaseDaoImpl implements FaseDao {
     @Override
     public List<Fase> buscarTodos() {
         Query<Fase> query = this.sessao.createQuery("from Fase", Fase.class);
-        List<Fase> fasees = query.getResultList();
-        return fasees;
+        List<Fase> fases = query.getResultList();
+        return fases;
     }
 
     @Override
@@ -59,5 +59,11 @@ public class FaseDaoImpl implements FaseDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Fase buscarUltimaFaseSalva() {
+        Query<Fase> query = this.sessao.createQuery("FROM Fase f ORDER BY f.idFase DESC", Fase.class);
+        query.setMaxResults(1);
+        return (Fase) query.uniqueResult();
     }
 }

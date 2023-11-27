@@ -17,10 +17,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tb_fase")
 public class Fase {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_fase")
-    private Integer idElementoGrafico;
+    private Integer idFase;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_personagem")
@@ -40,12 +41,12 @@ public class Fase {
         this.asteroides = new ArrayList<Asteroide>();
     }
 
-    public Integer getIdElementoGrafico() {
-        return this.idElementoGrafico;
+    public Integer getIdFase() {
+        return this.idFase;
     }
 
-    public void setIdElementoGrafico(Integer idElementoGrafico) {
-        this.idElementoGrafico = idElementoGrafico;
+    public void setIdFase(Integer idFase) {
+        this.idFase = idFase;
     }
 
     public Personagem getPersonagem() {
@@ -71,5 +72,4 @@ public class Fase {
     public void setAsteroides(List<Asteroide> asteroides) {
         this.asteroides = asteroides;
     }
-
 }

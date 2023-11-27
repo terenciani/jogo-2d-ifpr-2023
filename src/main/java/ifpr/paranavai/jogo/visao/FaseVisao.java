@@ -20,6 +20,12 @@ public abstract class FaseVisao extends JPanel {
         setFocusable(true);
         setDoubleBuffered(true);
     }
+    
+    public FaseVisao(Fase fase) {
+        this.fase = fase;
+        setFocusable(true);
+        setDoubleBuffered(true);
+    }
 
     public boolean isEmJogo() {
         return emJogo;
