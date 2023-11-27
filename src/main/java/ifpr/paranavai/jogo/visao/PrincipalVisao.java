@@ -21,7 +21,7 @@ public class PrincipalVisao extends JFrame {
     }
 
     private PrincipalVisao(Fase fase) {
-        FaseVisao faseVisao = new FaseUmVisao();
+        FaseVisao faseVisao = new FaseUmVisao(fase);
         inicializar(faseVisao);
     }
 

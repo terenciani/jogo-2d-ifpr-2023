@@ -1,7 +1,6 @@
 package ifpr.paranavai.jogo.servico;
 
 import ifpr.paranavai.jogo.modelo.Asteroide;
-import ifpr.paranavai.jogo.modelo.Fase;
 import ifpr.paranavai.jogo.visao.PrincipalVisao;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -27,13 +26,9 @@ public class AsteroideServico {
         }
     }
 
-    public void inicializaAsteroides(Fase fase) {
-        for (int i = 0; i < QTDE_DE_ASTEROIDES; i++) {
-            int x = (int) (Math.random() * PrincipalVisao.LARGURA_DA_JANELA);
-            int y = (int) (Math.random() * PrincipalVisao.ALTURA_DA_JANELA);
-            Asteroide asteroide = new Asteroide(x, y);
+    public void carregarAsteroides(List<Asteroide> asteroides) {
+        for (Asteroide asteroide : asteroides) {
             this.carregarImagem(asteroide);
-            fase.getAsteroides().add(asteroide);
         }
     }
 
@@ -42,6 +37,16 @@ public class AsteroideServico {
         asteroide.setImagem(carregando.getImage());
         asteroide.setLarguraImagem(carregando.getImage().getWidth(null));
         asteroide.setAlturaImagem(carregando.getImage().getHeight(null));
+    }
+
+    public void inicializaAsteroides(List<Asteroide> asteroides) {
+        for (int i = 0; i < QTDE_DE_ASTEROIDES; i++) {
+            int x = (int) (Math.random() * PrincipalVisao.LARGURA_DA_JANELA);
+            int y = (int) (Math.random() * PrincipalVisao.ALTURA_DA_JANELA);
+            Asteroide asteroide = new Asteroide(x, y);
+            this.carregarImagem(asteroide);
+            asteroides.add(asteroide);
+        }
     }
 
 }

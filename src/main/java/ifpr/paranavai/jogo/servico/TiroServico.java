@@ -30,4 +30,10 @@ public class TiroServico {
         tiro.setLarguraImagem(carregando.getImage().getWidth(null));
         tiro.setAlturaImagem(carregando.getImage().getHeight(null));
     }
+
+    public void carregarTiros(List<Tiro> tiros) {
+        for (Tiro tiro : tiros) {
+            this.carregarImagem(tiro);
+        }
+    }
 }

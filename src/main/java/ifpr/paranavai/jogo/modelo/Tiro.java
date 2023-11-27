@@ -7,6 +7,9 @@ import javax.persistence.Table;
 @Table(name = "tb_tiro")
 public class Tiro extends ElementoGrafico {
 
+    public Tiro() {
+    }
+
     public Tiro(int posicaoPersonagemEmX, int posicaoPersonagemEmY) {
         super.setPosicaoEmX(posicaoPersonagemEmX);
         super.setPosicaoEmY(posicaoPersonagemEmY - (this.getAlturaImagem() / 2));

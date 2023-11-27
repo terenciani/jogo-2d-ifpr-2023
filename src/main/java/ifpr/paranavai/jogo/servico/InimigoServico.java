@@ -21,6 +21,12 @@ public class InimigoServico {
         inimigo.setAlturaImagem(carregando.getImage().getHeight(null));
     }
 
+    public void carregarInimigos(List<Inimigo> inimigos) {
+        for (Inimigo inimigo : inimigos) {
+            this.carregarImagem(inimigo);
+        }
+    }
+
     public void atualizarPosicao(Inimigo inimigo) {
         inimigo.setPosicaoEmX(inimigo.getPosicaoEmX() - VELOCIDADE);
     }
@@ -36,18 +42,17 @@ public class InimigoServico {
         }
     }
 
-    public void inicializaInimigos(Fase fase) {
+    public void inicializaInimigos(List<Inimigo> inimigos) {
         for (int i = 0; i < QTDE_DE_INIMIGOS; i++) {
             int x = (int) ((Math.random() * 8000) + PrincipalVisao.LARGURA_DA_JANELA);
             int y = (int) (Math.random() * PrincipalVisao.ALTURA_DA_JANELA);
             Inimigo inimigo = new Inimigo(x, y);
             this.carregarImagem(inimigo);
-            fase.getInimigos().add(inimigo);
+            inimigos.add(inimigo);
         }
     }
 
     public boolean verificarColisoes(Fase fase) {
-
         Rectangle formaPersonagem = fase.getPersonagem().getRectangle();
         for (int i = 0; i < fase.getInimigos().size(); i++) {
             Inimigo inimigo = fase.getInimigos().get(i);

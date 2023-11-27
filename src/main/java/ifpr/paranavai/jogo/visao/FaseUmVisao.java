@@ -19,7 +19,7 @@ public class FaseUmVisao extends FaseVisao {
 
     public FaseUmVisao() {
         super();
-        this.controle = new FaseUmControle(fase, this);
+        this.controle = new FaseUmControle(this);
         this.carregarImagemFundo();
         this.addKeyListener(this.controle);
         this.emJogo = true;
