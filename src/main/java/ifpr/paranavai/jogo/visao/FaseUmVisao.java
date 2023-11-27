@@ -9,6 +9,8 @@ import javax.swing.Timer;
 import ifpr.paranavai.jogo.controle.FaseUmControle;
 import ifpr.paranavai.jogo.modelo.ElementoGrafico;
 import ifpr.paranavai.jogo.modelo.Fase;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 public class FaseUmVisao extends FaseVisao {
@@ -26,7 +28,7 @@ public class FaseUmVisao extends FaseVisao {
         this.timer = new Timer(DELAY, controle);
         this.timer.start();
     }
-    
+
     public FaseUmVisao(Fase fase) {
         super(fase);
         this.controle = new FaseUmControle(super.fase, this);
@@ -49,10 +51,11 @@ public class FaseUmVisao extends FaseVisao {
             graficos.drawImage(fundo, 0, 0, null);
             redesenharElementosGraficos(graficos);
             desenharPontuacao(graficos);
-            desenharInstrucoes(graficos);
+            desenharInstrucoes(graficos, "Pressione ESC para salvar!", 265, 50);
         } else {
             ImageIcon fimDeJogo = new ImageIcon(getClass().getResource("/fimdejogo.jpg"));
             graficos.drawImage(fimDeJogo.getImage(), 0, 0, this);
+            desenharInstrucoes(graficos, "Pressione M para ver o Menu!", 285, 50);
         }
         g.dispose();
     }
@@ -63,12 +66,11 @@ public class FaseUmVisao extends FaseVisao {
         redesenhaElementoGrafico(graficos, super.fase.getPersonagem().getTiros());
         redesenhaElementoGrafico(graficos, super.fase.getInimigos());
     }
-    
-    private void desenharInstrucoes(Graphics2D graficos) {
-        String textoPontuacao = "Pressione ESC para salvar!";
+
+    private void desenharInstrucoes(Graphics2D graficos, String textoPontuacao, int x, int y) {
         graficos.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 20));
         graficos.setColor(new java.awt.Color(255, 255, 255));
-        graficos.drawString(textoPontuacao, PrincipalVisao.LARGURA_DA_JANELA - 275, PrincipalVisao.ALTURA_DA_JANELA - 50);
+        graficos.drawString(textoPontuacao, PrincipalVisao.LARGURA_DA_JANELA - x, PrincipalVisao.ALTURA_DA_JANELA - y);
     }
 
     private void desenharPontuacao(Graphics2D graficos) {
@@ -77,7 +79,6 @@ public class FaseUmVisao extends FaseVisao {
         graficos.setColor(new java.awt.Color(255, 255, 255));
         graficos.drawString(textoPontuacao, 20, 25);
     }
-    
 
     private void redesenhaElementoGrafico(Graphics2D graficos, ElementoGrafico elementoGrafico) {
         graficos.drawImage(elementoGrafico.getImagem(), elementoGrafico.getPosicaoEmX(), elementoGrafico.getPosicaoEmY(), this);

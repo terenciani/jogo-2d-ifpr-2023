@@ -16,10 +16,10 @@ public class FaseServico {
     }
     
     public void criarPontoSalvamento(Fase fase) {
-        //faseDao.excluirTodosOsPontosSalvamento();
         if (fase.getIdFase() != null && fase.getIdFase() > 0) {
             faseDao.atualizar(fase);
         } else {
+            // faseDao.excluirTodosOsPontosSalvamento();
             faseDao.inserir(fase);
         }
     }

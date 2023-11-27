@@ -29,7 +29,7 @@ public class Personagem extends ElementoGrafico {
     private List<Tiro> tiros;
 
     public Personagem() {
-        this.tiros = new ArrayList<Tiro>();
+        this.tiros = new ArrayList<>();
     }
 
     public Personagem(int posicaoEmX, int posicaoEmY) {

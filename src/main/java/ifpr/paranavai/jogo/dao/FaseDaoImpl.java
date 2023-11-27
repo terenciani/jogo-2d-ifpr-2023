@@ -66,4 +66,14 @@ public class FaseDaoImpl implements FaseDao {
         query.setMaxResults(1);
         return (Fase) query.uniqueResult();
     }
+
+    public void excluirTodosOsPontosSalvamento() {
+        try {
+            sessao.beginTransaction();
+            sessao.createQuery("DELETE FROM Fase").executeUpdate();
+            sessao.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

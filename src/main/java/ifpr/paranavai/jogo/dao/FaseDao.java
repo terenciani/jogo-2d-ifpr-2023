@@ -15,4 +15,6 @@ public interface FaseDao {
     public void inserir(Fase fase);
 
     public Fase buscarUltimaFaseSalva();
+
+    public void excluirTodosOsPontosSalvamento();
 }

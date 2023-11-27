@@ -6,6 +6,7 @@ import ifpr.paranavai.jogo.conexao.HibernateUtil;
 import ifpr.paranavai.jogo.dao.FaseDaoImpl;
 import ifpr.paranavai.jogo.modelo.Fase;
 import ifpr.paranavai.jogo.servico.FaseServico;
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
 public class PrincipalVisao extends JFrame {
@@ -14,44 +15,48 @@ public class PrincipalVisao extends JFrame {
     public static final int ALTURA_DA_JANELA = 728;
     private static final int INICIAR_NOVO_JOGO = 0;
     private static final int CARREGAR_ULTIMO_JOGO = 1;
+    private static final int CANCELAR = 2;
 
-    private PrincipalVisao() {
-        FaseVisao faseVisao = new FaseUmVisao();
-        inicializar(faseVisao);
-    }
-
-    private PrincipalVisao(Fase fase) {
-        FaseVisao faseVisao = new FaseUmVisao(fase);
-        inicializar(faseVisao);
+    public PrincipalVisao() {
     }
 
     private void inicializar(FaseVisao faseVisao) {
-        super.add(faseVisao);
-        super.setTitle("Jogo do IFPR - Campus Paranava√≠");
-        super.setSize(LARGURA_DA_JANELA, ALTURA_DA_JANELA);
-        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        super.setLocationRelativeTo(null);
-        super.setResizable(false);
-        super.setVisible(true);
+        this.add(faseVisao);
+        this.setTitle("Jogo do IFPR - Campus Paranava√≠");
+        this.setSize(LARGURA_DA_JANELA, ALTURA_DA_JANELA);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setVisible(true);
     }
 
     public static void main(String[] args) {
         exibirCarregando();
-        
-        int opcao = exibirOpcoes();
+        PrincipalVisao principalVisao = new PrincipalVisao();
+        principalVisao.iniciarJogo();
+    }
 
-        if (opcao == INICIAR_NOVO_JOGO) {
-            new PrincipalVisao();
-        }
-        if (opcao == CARREGAR_ULTIMO_JOGO) {
-            FaseServico faseServico = new FaseServico(new FaseDaoImpl());
-            Fase fase = faseServico.buscarUltimoJogoSalvo();
-            if (fase != null) {
-                new PrincipalVisao(fase);
-            } else {
-                JOptionPane.showMessageDialog(null, "Nenhum jogo foi encontrado! Um novo jogo ser· iniciado!");
-                new PrincipalVisao();
-            }
+    public final void iniciarJogo() throws HeadlessException {
+        int opcao = exibirOpcoes();
+        switch (opcao) {
+            case INICIAR_NOVO_JOGO:
+                this.inicializar(new FaseUmVisao());
+                break;
+            case CARREGAR_ULTIMO_JOGO:
+                FaseServico faseServico = new FaseServico(new FaseDaoImpl());
+                Fase fase = faseServico.buscarUltimoJogoSalvo();
+                if (fase != null) {
+                    this.inicializar(new FaseUmVisao(fase));
+                } else {
+                    JOptionPane.showMessageDialog(null, "Nenhum jogo foi encontrado! Um novo jogo ser· iniciado!");
+                    this.inicializar(new FaseUmVisao());
+                }
+                break;
+            case CANCELAR:
+                this.encerrarJogo();
+                break;
+            default:
+                break;
         }
     }
 
@@ -79,5 +84,12 @@ public class PrincipalVisao extends JFrame {
             carregando.setVisible(false);
             carregando.dispose();
         }
+    }
+
+    public void encerrarJogo() {
+        this.getContentPane().removeAll();
+        this.revalidate();
+        this.repaint();
+        this.dispose();
     }
 }

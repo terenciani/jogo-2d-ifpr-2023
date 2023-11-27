@@ -37,8 +37,8 @@ public class Fase {
 
     public Fase() {
         this.personagem = new Personagem();
-        this.inimigos = new ArrayList<Inimigo>();
-        this.asteroides = new ArrayList<Asteroide>();
+        this.inimigos = new ArrayList<>();
+        this.asteroides = new ArrayList<>();
     }
 
     public Integer getIdFase() {
