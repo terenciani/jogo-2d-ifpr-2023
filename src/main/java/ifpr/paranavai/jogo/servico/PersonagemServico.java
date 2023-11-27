@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ifpr.paranavai.jogo.servico;
 
 import ifpr.paranavai.jogo.modelo.Personagem;
@@ -9,20 +5,29 @@ import ifpr.paranavai.jogo.modelo.Tiro;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author teren
- */
 public class PersonagemServico {
+
     private static final int DESLOCAMENTO = 3;
 
-    public void atirar(Personagem personagem) {        
+    public void atirar(Personagem personagem) {
         TiroServico tiroServico = new TiroServico();
         int frenteDaNave = personagem.getPosicaoEmX() + personagem.getLarguraImagem();
         int meioDaNave = personagem.getPosicaoEmY() + (personagem.getAlturaImagem() / 2);
         Tiro tiro = new Tiro(frenteDaNave, meioDaNave);
         tiroServico.carregarImagem(tiro);
         personagem.getTiros().add(tiro);
+    }
+
+    public void atualizarPosicao(Personagem personagem) {
+        personagem.setPosicaoEmX(personagem.getPosicaoEmX() + personagem.getDeslocamentoEmX());
+        personagem.setPosicaoEmY(personagem.getPosicaoEmY() + personagem.getDeslocamentoEmY());
+    }
+
+    public void carregarImagem(Personagem personagem) {
+        ImageIcon carregando = new ImageIcon(getClass().getResource("/espaconave.png"));
+        personagem.setImagem(carregando.getImage());
+        personagem.setLarguraImagem(carregando.getImage().getWidth(null));
+        personagem.setAlturaImagem(carregando.getImage().getHeight(null));
     }
 
     public void mover(Personagem personagem, int codigoDaTecla) {
@@ -43,7 +48,7 @@ public class PersonagemServico {
                 break;
         }
     }
-    
+
     public void parar(Personagem personagem, int codigoDaTecla) {
         switch (codigoDaTecla) {
             case KeyEvent.VK_UP:
@@ -62,16 +67,5 @@ public class PersonagemServico {
                 break;
         }
     }
-    
-    public void atualizarPosicao(Personagem personagem) {
-        personagem.setPosicaoEmX(personagem.getPosicaoEmX() + personagem.getDeslocamentoEmX());
-        personagem.setPosicaoEmY(personagem.getPosicaoEmY() + personagem.getDeslocamentoEmY());
-    }
-    
-    public void carregarImagem(Personagem personagem) {
-        ImageIcon carregando = new ImageIcon(getClass().getResource("/espaconave.png"));
-        personagem.setImagem(carregando.getImage());
-        personagem.setLarguraImagem(carregando.getImage().getWidth(null));
-        personagem.setAlturaImagem(carregando.getImage().getHeight(null));
-    }
+
 }

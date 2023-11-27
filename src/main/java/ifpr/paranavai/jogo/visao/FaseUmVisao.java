@@ -7,18 +7,15 @@ import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
 import ifpr.paranavai.jogo.controle.FaseUmControle;
-import ifpr.paranavai.jogo.modelo.Asteroide;
-import ifpr.paranavai.jogo.modelo.Inimigo;
-import ifpr.paranavai.jogo.modelo.Personagem;
-import ifpr.paranavai.jogo.modelo.Tiro;
+import ifpr.paranavai.jogo.modelo.ElementoGrafico;
 import java.util.List;
 
 public class FaseUmVisao extends FaseVisao {
-    
+
     private static final int DELAY = 5;
 
     private FaseUmControle controle;
-    
+
     public FaseUmVisao() {
         super();
         this.controle = new FaseUmControle(fase, this);
@@ -47,26 +44,30 @@ public class FaseUmVisao extends FaseVisao {
         }
         g.dispose();
     }
-    
+
     public void redesenharElementosGraficos(Graphics2D graficos) {
-        Personagem personagem = super.fase.getPersonagem();
-        for (Asteroide asteroide : super.fase.getAsteroides()) {
-            graficos.drawImage(asteroide.getImagem(), asteroide.getPosicaoEmX(), asteroide.getPosicaoEmY(), this);
-        }
-        graficos.drawImage(personagem.getImagem(), personagem.getPosicaoEmX(), personagem.getPosicaoEmY(), this);
-        List<Tiro> tiros = personagem.getTiros();
-        for (Tiro tiro : tiros) {
-            graficos.drawImage(tiro.getImagem(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
-        }
-        for (Inimigo inimigo : super.fase.getInimigos()) {
-            graficos.drawImage(inimigo.getImagem(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
-        }
+        redesenhaElementoGrafico(graficos, super.fase.getAsteroides());
+        redesenhaElementoGrafico(graficos, super.fase.getPersonagem());
+        redesenhaElementoGrafico(graficos, super.fase.getPersonagem().getTiros());
+        redesenhaElementoGrafico(graficos, super.fase.getInimigos());
     }
-    
+
     public void desenharPontuacao(Graphics2D graficos) {
         String textoPontuacao = "PONTOS: " + fase.getPersonagem().getPontuacao();
         graficos.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 22));
         graficos.setColor(new java.awt.Color(255, 255, 255));
         graficos.drawString(textoPontuacao, 20, 25);
+    }
+
+    private void redesenhaElementoGrafico(Graphics2D graficos, ElementoGrafico elementoGrafico) {
+        graficos.drawImage(elementoGrafico.getImagem(), elementoGrafico.getPosicaoEmX(), elementoGrafico.getPosicaoEmY(), this);
+    }
+
+    private <T> void redesenhaElementoGrafico(Graphics2D graficos, List<T> elementosGraficos) {
+        for (T e : elementosGraficos) {
+            if (e instanceof ElementoGrafico) {
+                redesenhaElementoGrafico(graficos, (ElementoGrafico) e);
+            }
+        }
     }
 }

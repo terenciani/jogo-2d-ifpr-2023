@@ -6,20 +6,13 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 public class TiroServico {
-    
+
     private static final int VELOCIDADE = 2;
-    
-    public void carregarImagem(Tiro tiro) {
-        ImageIcon carregando = new ImageIcon(getClass().getResource("/tiro.png"));
-        tiro.setImagem(carregando.getImage());
-        tiro.setLarguraImagem(carregando.getImage().getWidth(null));
-        tiro.setAlturaImagem(carregando.getImage().getHeight(null));
-    }
-    
+
     public void atualizarPosicao(Tiro tiro) {
         tiro.setPosicaoEmX(tiro.getPosicaoEmX() + VELOCIDADE);
     }
-    
+
     public void atualizarPosicao(List<Tiro> tiros) {
         for (int i = 0; i < tiros.size(); i++) {
             Tiro tiro = tiros.get(i);
@@ -29,5 +22,12 @@ public class TiroServico {
                 this.atualizarPosicao(tiro);
             }
         }
+    }
+
+    public void carregarImagem(Tiro tiro) {
+        ImageIcon carregando = new ImageIcon(getClass().getResource("/tiro.png"));
+        tiro.setImagem(carregando.getImage());
+        tiro.setLarguraImagem(carregando.getImage().getWidth(null));
+        tiro.setAlturaImagem(carregando.getImage().getHeight(null));
     }
 }
