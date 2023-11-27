@@ -39,10 +39,6 @@ public abstract class ElementoGrafico {
     @Column(name = "eh_visivel")
     private boolean ehVisivel = true;
 
-    public abstract void carregar();
-
-    public abstract void atualizar();
-
     public Rectangle getRectangle() {
         return new Rectangle(posicaoEmX, posicaoEmY, larguraImagem, alturaImagem);
     }
@@ -77,9 +73,6 @@ public abstract class ElementoGrafico {
 
     public void setImagem(Image imagem) {
         this.imagem = imagem;
-
-        this.larguraImagem = this.imagem.getWidth(null);
-        this.alturaImagem = this.imagem.getHeight(null);
     }
 
     public int getLarguraImagem() {

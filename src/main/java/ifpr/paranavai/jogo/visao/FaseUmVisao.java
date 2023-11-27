@@ -2,35 +2,36 @@ package ifpr.paranavai.jogo.visao;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
 import ifpr.paranavai.jogo.controle.FaseUmControle;
+import ifpr.paranavai.jogo.modelo.Asteroide;
+import ifpr.paranavai.jogo.modelo.Inimigo;
 import ifpr.paranavai.jogo.modelo.Personagem;
-import ifpr.paranavai.jogo.visao.FaseVisao;
+import ifpr.paranavai.jogo.modelo.Tiro;
+import java.util.List;
 
 public class FaseUmVisao extends FaseVisao {
-
+    
     private static final int DELAY = 5;
-    private static final int POSICAO_INICIAL_PERSONAGEM_EM_X = 100;
-    private static final int POSICAO_INICIAL_PERSONAGEM_EM_Y = 100;
 
+    private FaseUmControle controle;
+    
     public FaseUmVisao() {
         super();
-        this.controle = new FaseUmControle();
+        this.controle = new FaseUmControle(fase, this);
+        this.carregarImagemFundo();
+        this.addKeyListener(this.controle);
         this.emJogo = true;
+        this.timer = new Timer(DELAY, controle);
+        this.timer.start();
+    }
+
+    private void carregarImagemFundo() {
         ImageIcon carregando = new ImageIcon(getClass().getResource("/fundo.jpg"));
         this.fundo = carregando.getImage();
-        this.fase.setPersonagem(new Personagem(POSICAO_INICIAL_PERSONAGEM_EM_X, POSICAO_INICIAL_PERSONAGEM_EM_Y));
-        controle.inicializaElementosGraficosAdicionais(super.fase);
-        controle.inicializaInimigos(super.fase);
-
-        this.timer = new Timer(DELAY, this);
-        this.timer.start();
-
     }
 
     @Override
@@ -38,38 +39,34 @@ public class FaseUmVisao extends FaseVisao {
         Graphics2D graficos = (Graphics2D) g;
         if (emJogo) {
             graficos.drawImage(fundo, 0, 0, null);
-            controle.redesenhaElementosGraficos(graficos, super.fase, this);
-            controle.desenhaPontuacao(graficos, super.fase);
+            redesenharElementosGraficos(graficos);
+            desenharPontuacao(graficos);
         } else {
             ImageIcon fimDeJogo = new ImageIcon(getClass().getResource("/fimdejogo.jpg"));
             graficos.drawImage(fimDeJogo.getImage(), 0, 0, this);
         }
         g.dispose();
     }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        int codigo = e.getKeyCode();
-        if (codigo == KeyEvent.VK_SPACE) {
-            controle.atirar(this.fase.getPersonagem());
-        } else {
-            controle.movimentarPersonagem(this.fase.getPersonagem(), codigo);
+    
+    public void redesenharElementosGraficos(Graphics2D graficos) {
+        Personagem personagem = super.fase.getPersonagem();
+        for (Asteroide asteroide : super.fase.getAsteroides()) {
+            graficos.drawImage(asteroide.getImagem(), asteroide.getPosicaoEmX(), asteroide.getPosicaoEmY(), this);
+        }
+        graficos.drawImage(personagem.getImagem(), personagem.getPosicaoEmX(), personagem.getPosicaoEmY(), this);
+        List<Tiro> tiros = personagem.getTiros();
+        for (Tiro tiro : tiros) {
+            graficos.drawImage(tiro.getImagem(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
+        }
+        for (Inimigo inimigo : super.fase.getInimigos()) {
+            graficos.drawImage(inimigo.getImagem(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
         }
     }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        controle.pararPersonagem(this.fase.getPersonagem(), e.getKeyCode());
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        controle.atualizarPosicoesElementosGraficos(this.fase);
-        emJogo = controle.verificarColisoes(this.fase);
-        repaint();
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
+    
+    public void desenharPontuacao(Graphics2D graficos) {
+        String textoPontuacao = "PONTOS: " + fase.getPersonagem().getPontuacao();
+        graficos.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 22));
+        graficos.setColor(new java.awt.Color(255, 255, 255));
+        graficos.drawString(textoPontuacao, 20, 25);
     }
 }

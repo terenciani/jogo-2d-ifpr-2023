@@ -29,7 +29,6 @@ public class Personagem extends ElementoGrafico {
     private List<Tiro> tiros;
 
     public Personagem() {
-        this.carregar();
         this.tiros = new ArrayList<Tiro>();
     }
 
@@ -38,17 +37,7 @@ public class Personagem extends ElementoGrafico {
         super.setPosicaoEmX(posicaoEmX);
         super.setPosicaoEmY(posicaoEmY);
     }
-
-    public void carregar() {
-        ImageIcon carregando = new ImageIcon(getClass().getResource("/espaconave.png"));
-        super.setImagem(carregando.getImage());
-    }
-
-    public void atualizar() {
-        super.setPosicaoEmX(super.getPosicaoEmX() + this.deslocamentoEmX);
-        super.setPosicaoEmY(super.getPosicaoEmY() + this.deslocamentoEmY);
-    }
-
+    
     public int getDeslocamentoEmX() {
         return this.deslocamentoEmX;
     }
