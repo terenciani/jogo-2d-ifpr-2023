@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.swing.ImageIcon;
 
 @Entity
 @Table(name = "tb_personagem")
@@ -37,7 +36,7 @@ public class Personagem extends ElementoGrafico {
         super.setPosicaoEmX(posicaoEmX);
         super.setPosicaoEmY(posicaoEmY);
     }
-    
+
     public int getDeslocamentoEmX() {
         return this.deslocamentoEmX;
     }

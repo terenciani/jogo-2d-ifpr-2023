@@ -18,7 +18,7 @@ public abstract class FaseVisao extends JPanel {
     public FaseVisao() {
         inicializar();
     }
-    
+
     public FaseVisao(Fase fase) {
         this.fase = fase;
         inicializar();
@@ -45,7 +45,5 @@ public abstract class FaseVisao extends JPanel {
         this.fase = fase;
     }
 
-    
-    
     public abstract void paint(Graphics g);
 }

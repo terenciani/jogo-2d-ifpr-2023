@@ -2,6 +2,7 @@ package ifpr.paranavai.jogo.visao;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
@@ -9,9 +10,6 @@ import javax.swing.Timer;
 import ifpr.paranavai.jogo.controle.FaseUmControle;
 import ifpr.paranavai.jogo.modelo.ElementoGrafico;
 import ifpr.paranavai.jogo.modelo.Fase;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
 
 public class FaseUmVisao extends FaseVisao {
 
@@ -81,7 +79,8 @@ public class FaseUmVisao extends FaseVisao {
     }
 
     private void redesenhaElementoGrafico(Graphics2D graficos, ElementoGrafico elementoGrafico) {
-        graficos.drawImage(elementoGrafico.getImagem(), elementoGrafico.getPosicaoEmX(), elementoGrafico.getPosicaoEmY(), this);
+        graficos.drawImage(elementoGrafico.getImagem(), elementoGrafico.getPosicaoEmX(),
+                elementoGrafico.getPosicaoEmY(), this);
     }
 
     private <T> void redesenhaElementoGrafico(Graphics2D graficos, List<T> elementosGraficos) {
